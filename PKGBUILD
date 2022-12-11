@@ -11,8 +11,10 @@ provides=("firefox=107.0.1")
 conflicts=('firefox' 'firefox-bin')
 source=("https://archive.mozilla.org/pub/firefox/releases/107.0.1/linux-x86_64/en-US/firefox-107.0.1.tar.bz2"
         $_pkgname.sh
-        $_pkgname.desktop)
+        $_pkgname.desktop
+        jiaweb.png)
 sha256sums=('dd08d4dfb69e379ce680a303c6c89c67056ce1d8ec0276345a8e8a0f04cd7dca'
+            'SKIP'
             'SKIP'
             'SKIP')
 validpgpkeys=('14F26682D0916CDD81E37B6D61B7B526D98F0353') # Mozilla Software Releases <release@mozilla.com>
@@ -32,12 +34,9 @@ package() {
   # Desktops
   install -m644 *.desktop "$pkgdir"/usr/share/applications/
 
-  # Icons
-  #for i in 16x16 32x32 48x48 64x64 128x128; do
-  #  install -d "$pkgdir"/usr/share/icons/hicolor/$i/apps/
-  #  ln -s /opt/$pkgname/browser/chrome/icons/default/default${i/x*}.png \
-  #        "$pkgdir"/usr/share/icons/hicolor/$i/apps/$_pkgname.png
-  #done
+  # Icon
+  mkdir -p $pkgdir/usr/share/icons/cvm-ui-icons
+  cp $srcdir/jiaweb.png $pkgdir/usr/share/icons/cvm-ui-icons
 
   # Use system-provided dictionaries
   #rm -r "$pkgdir"/opt/$_pkgname/dictionaries
