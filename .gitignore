@@ -1,0 +1,8 @@
+*
+
+!*.desktop
+!PKGBUILD
+!.gitignore
+!firefox.sh
+!LICENSE
+!README.md
