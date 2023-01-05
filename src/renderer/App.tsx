@@ -1,10 +1,5 @@
 import { useEffect, useRef } from "react";
-import {
-  ArrowLeft20Filled,
-  ArrowRight20Filled,
-  LineHorizontal320Filled,
-  Search20Filled,
-} from "@fluentui/react-icons";
+import Navbar from "./components/Navbar";
 
 type ElectronWebViewElement = HTMLWebViewElement & {
   src: string;
@@ -23,45 +18,8 @@ export default function App() {
 
   return (
     <div>
-      <div className="navbar bg-base-100">
-        <div className="navbar-start">
-          <div className="form-control mr-2">
-            <div className="input-group">
-              <input
-                type="text"
-                placeholder="Search…"
-                className="input input-bordered"
-              />
-              <button className="btn btn-square">
-                <Search20Filled />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="navbar-end">
-          <button
-            className="btn btn-ghost btn-circle"
-            onClick={() => {
-              webview.current.goBack();
-              console.log(webview.current.canGoBack());
-            }}
-          >
-            <ArrowLeft20Filled />
-          </button>
-          <button
-            className="btn btn-ghost btn-circle"
-            onClick={() => {
-              webview.current.goForward();
-              console.log(webview.current.canGoForward());
-            }}
-          >
-            <ArrowRight20Filled />
-          </button>
-          <button className="btn btn-ghost btn-circle">
-            <LineHorizontal320Filled />
-          </button>
-        </div>
-      </div>
+      <Navbar />
+      <div className="h-12"></div>
       <webview ref={webview} className="h-webview"></webview>
     </div>
   );
