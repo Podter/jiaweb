@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="logo" src="https://raw.githubusercontent.com/jiafeitech/jiaweb/main/images/icons/128x128.png">
+    <img alt="logo" src="https://raw.githubusercontent.com/jiafeitech/jiaweb/main/images/icons/256x256.png">
 </p>
 
 <h2 align="center">
