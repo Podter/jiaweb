@@ -8,7 +8,7 @@ import {
 
 export default function Navbar() {
   return (
-    <div className="h-12 flex items-center">
+    <div className="h-12 flex items-center justify-center">
       <div className="tooltip tooltip-bottom" data-tip="Back">
         <button className="btn btn-ghost btn-circle">
           <ArrowLeft20Filled />
