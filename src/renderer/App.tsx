@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import Navbar from "./components/Navbar";
+import Tabs from "./components/Tabs";
 
 type ElectronWebViewElement = HTMLWebViewElement & {
   src: string;
@@ -19,7 +20,7 @@ export default function App() {
   return (
     <div>
       <Navbar />
-      <div className="h-12"></div>
+      <Tabs />
       <webview ref={webview} className="h-webview"></webview>
     </div>
   );
