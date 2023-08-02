@@ -3,29 +3,32 @@
  */
 {
   $schema: "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  appId: "YourAppID",
+  appId: "me.podter.jiaweb",
+  productName: "JIΛweb",
+  executableName: "jiaweb",
+  copyright: "Copyright © 2023 ${author}",
   asar: true,
   directories: {
-    output: "release/${version}",
+    output: "release/${version}"
   },
   files: ["dist-electron", "dist"],
   mac: {
-    artifactName: "${productName}_${version}.${ext}",
-    target: ["dmg"],
+    artifactName: "${name}_${version}.${ext}",
+    target: ["dmg"]
   },
   win: {
     target: [
       {
         target: "nsis",
-        arch: ["x64"],
-      },
+        arch: ["x64"]
+      }
     ],
-    artifactName: "${productName}_${version}.${ext}",
+    artifactName: "${name}_${version}.${ext}"
   },
   nsis: {
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
-    deleteAppDataOnUninstall: false,
-  },
+    deleteAppDataOnUninstall: false
+  }
 }
