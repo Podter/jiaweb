@@ -9,26 +9,26 @@
   copyright: "Copyright © 2023 ${author}",
   asar: true,
   directories: {
-    output: "release/${version}"
+    output: "release/${version}",
   },
   files: ["dist-electron", "dist"],
   mac: {
     artifactName: "${name}_${version}.${ext}",
-    target: ["dmg"]
+    target: ["dmg"],
   },
   win: {
     target: [
       {
         target: "nsis",
-        arch: ["x64"]
-      }
+        arch: ["x64"],
+      },
     ],
-    artifactName: "${name}_${version}.${ext}"
+    artifactName: "${name}_${version}.${ext}",
   },
   nsis: {
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
-    deleteAppDataOnUninstall: false
-  }
+    deleteAppDataOnUninstall: false,
+  },
 }
