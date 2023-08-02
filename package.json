@@ -1,7 +1,9 @@
 {
   "name": "jiaweb",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "Podter",
+  "repository": "https://github.com/Podter/jiaweb",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
