@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button.tsx";
-import { useState } from "react";
+import Titlebar from "@/components/Titlebar";
 
 export default function App() {
-  const [count, setCount] = useState(0);
-
-  return <Button onClick={() => setCount((c) => c + 1)}>Count: {count}</Button>;
+  return (
+    <>
+      <Titlebar />
+    </>
+  );
 }

@@ -27,6 +27,8 @@ function createWindow() {
     },
     width: 1280,
     height: 720,
+    frame: false,
+    autoHideMenuBar: true,
   });
 
   // Test active push message to Renderer-process.
