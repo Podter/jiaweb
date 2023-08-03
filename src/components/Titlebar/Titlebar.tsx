@@ -9,21 +9,23 @@ import {
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils.ts";
 
+const { appWindow } = window;
+
 export default function Titlebar() {
   const [maximized, setMaximized] = useState(false);
 
-  // useEffect(() => {
-  //   function handler() {
-  //     appWindow.isMaximized().then((maximized) => setMaximized(maximized));
-  //   }
-  //
-  //   handler();
-  //   const unlisten = appWindow.onResized(handler);
-  //
-  //   return () => {
-  //     unlisten.then((unlisten) => unlisten());
-  //   };
-  // }, []);
+  useEffect(() => {
+    function handler() {
+      appWindow.isMaximized().then((maximized) => setMaximized(maximized));
+    }
+
+    handler();
+    const unlisten = appWindow.onResized(handler);
+
+    return () => {
+      unlisten();
+    };
+  }, []);
 
   return (
     <div
@@ -34,15 +36,15 @@ export default function Titlebar() {
     >
       <div />
       <div className="flex justify-end">
-        <TitlebarButton onClick={() => {}}>
+        <TitlebarButton onClick={() => appWindow.minimize()}>
           <Subtract16Regular />
         </TitlebarButton>
-        <TitlebarButton onClick={() => {}}>
+        <TitlebarButton onClick={() => appWindow.toggleMaximize()}>
           {maximized ? <SquareMultiple16Regular /> : <Maximize16Regular />}
         </TitlebarButton>
         <TitlebarButton
           className="hover:text-destructive-foreground hover:bg-destructive/90"
-          onClick={() => {}}
+          onClick={() => appWindow.close()}
         >
           <Dismiss16Regular />
         </TitlebarButton>
