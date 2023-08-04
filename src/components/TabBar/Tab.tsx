@@ -6,13 +6,15 @@ import { Dismiss12Regular, DocumentRegular } from "@fluentui/react-icons";
 interface TabProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   favicon?: string;
+  selected?: boolean;
 }
 
 const Tab = forwardRef<HTMLButtonElement, TabProps>(
-  ({ title, favicon, className, ...props }, ref) => (
+  ({ title, favicon, selected, className, ...props }, ref) => (
     <button
       className={cn(
-        "inline-flex h-full w-full justify-center items-center border-r border-border relative transition-colors hover:bg-accent hover:text-accent-foreground group text-sm",
+        "inline-flex h-full w-full justify-center items-center border-r border-border relative transition-colors hover:bg-accent/50 hover:text-foreground group text-sm",
+        !selected && "bg-accent text-accent-foreground",
         className,
       )}
       ref={ref}
