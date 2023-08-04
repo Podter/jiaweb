@@ -1,6 +1,6 @@
 import styles from "./Titlebar.module.css";
 import { cn } from "@/lib/utils.ts";
-import SearchInput from "@/components/Titlebar/SearchInput.tsx";
+import SearchInput from "./SearchInput.tsx";
 import Menu from "./Menu.tsx";
 
 export default function Titlebar() {
