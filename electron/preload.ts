@@ -13,6 +13,33 @@ contextBridge.exposeInMainWorld("appWindow", {
   },
 });
 
+contextBridge.exposeInMainWorld("tabs", {
+  onTabDestroyed: (callback: (e: IpcRendererEvent, tabId: number) => void) => {
+    ipcRenderer.on("tabDestroyed", callback);
+    return () => ipcRenderer.off("tabDestroyed", callback);
+  },
+  onTabCreated: (callback: (e: IpcRendererEvent, tabId: number) => void) => {
+    ipcRenderer.on("tabCreated", callback);
+    return () => ipcRenderer.off("tabCreated", callback);
+  },
+  onTabChanged: (callback: (e: IpcRendererEvent, tabId: number) => void) => {
+    ipcRenderer.on("tabChanged", callback);
+    return () => ipcRenderer.off("tabChanged", callback);
+  },
+
+  getActiveTab: () => ipcRenderer.invoke("getActiveTab"),
+  getTab: (id: number) => ipcRenderer.invoke("getTab", id),
+  getTabIds: () => ipcRenderer.invoke("getTabIds"),
+
+  createTab: () => ipcRenderer.invoke("createTab"),
+  setActiveTab: (id: number) => ipcRenderer.invoke("setActiveTab", id),
+  closeTab: (id: number) => ipcRenderer.invoke("closeTab", id),
+
+  forward: () => ipcRenderer.invoke("forward"),
+  back: () => ipcRenderer.invoke("back"),
+  reload: () => ipcRenderer.invoke("reload"),
+});
+
 function domReady(
   condition: DocumentReadyState[] = ["complete", "interactive"],
 ) {
