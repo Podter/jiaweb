@@ -21,6 +21,7 @@ function createWindow() {
     height: 720 + 84,
     frame: false,
     autoHideMenuBar: true,
+    titleBarStyle: "hidden",
   });
 
   initWindowApi(win);
