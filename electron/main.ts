@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import path from "node:path";
 import { initWindowApi } from "./lib/window.ts";
+import { toolbarHeight } from "./constants.ts";
 
 process.env.DIST = path.join(__dirname, "../dist");
 process.env.PUBLIC = app.isPackaged
@@ -18,7 +19,7 @@ function createWindow() {
       // webviewTag: true,
     },
     width: 1280,
-    height: 720 + 84,
+    height: 720 + toolbarHeight,
     frame: false,
     autoHideMenuBar: true,
     titleBarStyle: "hidden",
