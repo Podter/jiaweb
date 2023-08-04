@@ -6,10 +6,10 @@ export default function App() {
     <>
       <TitleBar />
       <TabBar />
-      <webview
-        src="http://www.google.com/"
-        className="mt-[5.25rem] h-[calc(100vh-5.25rem)] w-full"
-      ></webview>
+      {/*<webview*/}
+      {/*  src="http://www.google.com/"*/}
+      {/*  className="mt-[5.25rem] h-[calc(100vh-5.25rem)] w-full"*/}
+      {/*></webview>*/}
     </>
   );
 }
