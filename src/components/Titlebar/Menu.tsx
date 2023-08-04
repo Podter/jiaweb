@@ -27,14 +27,20 @@ export default function Menu() {
 
   return (
     <div className="flex justify-end z-50">
-      <TitlebarButton onClick={() => appWindow.minimize()}>
+      <TitlebarButton
+        className="rounded-none h-12"
+        onClick={() => appWindow.minimize()}
+      >
         <Subtract16Regular />
       </TitlebarButton>
-      <TitlebarButton onClick={() => appWindow.toggleMaximize()}>
+      <TitlebarButton
+        className="rounded-none h-12"
+        onClick={() => appWindow.toggleMaximize()}
+      >
         {maximized ? <SquareMultiple16Regular /> : <Maximize16Regular />}
       </TitlebarButton>
       <TitlebarButton
-        className="hover:text-destructive-foreground hover:bg-destructive/90"
+        className="hover:text-destructive-foreground hover:bg-destructive/90 rounded-none h-12"
         onClick={() => appWindow.close()}
       >
         <Dismiss16Regular />
