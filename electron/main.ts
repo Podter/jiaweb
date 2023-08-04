@@ -11,7 +11,7 @@ process.env.PUBLIC = app.isPackaged
 let win: BrowserWindow | null;
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
-function createWindow() {
+async function createWindow() {
   win = new BrowserWindow({
     icon: path.join(process.env.PUBLIC, "electron-vite.svg"),
     webPreferences: {
@@ -28,9 +28,9 @@ function createWindow() {
   initWindowApi(win);
 
   if (VITE_DEV_SERVER_URL) {
-    win.loadURL(VITE_DEV_SERVER_URL);
+    await win.loadURL(VITE_DEV_SERVER_URL);
   } else {
-    win.loadFile(path.join(process.env.DIST, "index.html"));
+    await win.loadFile(path.join(process.env.DIST, "index.html"));
   }
 }
 
