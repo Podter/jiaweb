@@ -15,12 +15,11 @@ export default function Menu() {
   const [maximized, setMaximized] = useState(false);
 
   useEffect(() => {
-    function handler() {
-      appWindow.isMaximized().then((maximized) => setMaximized(maximized));
-    }
+    appWindow.isMaximized().then((maximized) => setMaximized(maximized));
 
-    handler();
-    const unlisten = appWindow.onResized(handler);
+    const unlisten = appWindow.onToggleMaximize((_, maximized) =>
+      setMaximized(maximized),
+    );
 
     return () => {
       unlisten();

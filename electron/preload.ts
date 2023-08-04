@@ -1,13 +1,15 @@
-import { contextBridge, ipcRenderer } from "electron";
+import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
 
 contextBridge.exposeInMainWorld("appWindow", {
   close: () => ipcRenderer.invoke("close"),
   minimize: () => ipcRenderer.invoke("minimize"),
   toggleMaximize: () => ipcRenderer.invoke("toggleMaximize"),
   isMaximized: () => ipcRenderer.invoke("isMaximized"),
-  onResized: (callback: () => void) => {
-    ipcRenderer.on("onResized", callback);
-    return () => ipcRenderer.off("onResized", callback);
+  onToggleMaximize: (
+    callback: (e: IpcRendererEvent, isMaximized: boolean) => void,
+  ) => {
+    ipcRenderer.on("onToggleMaximize", callback);
+    return () => ipcRenderer.off("onToggleMaximize", callback);
   },
 });
 

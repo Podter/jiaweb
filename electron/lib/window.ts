@@ -13,5 +13,6 @@ export function initWindowApi(win: BrowserWindow) {
 
   ipcMain.handle("isMaximized", () => win.isMaximized());
 
-  win.on("resize", () => win.webContents.send("onResized"));
+  win.on("maximize", () => win.webContents.send("onToggleMaximize", true));
+  win.on("unmaximize", () => win.webContents.send("onToggleMaximize", false));
 }
