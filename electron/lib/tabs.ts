@@ -122,7 +122,7 @@ export class Tabs {
     tab.webContents.loadURL("https://google.com");
     this.tabs.set(tab.id, tab);
     this.setActiveTab(tab.id);
-    this.window.webContents.send("tabsChanged", this.getTabIds());
+    this.window.webContents.send("tabsChanged", this.getTabs());
     return tab.id;
   }
 
@@ -144,7 +144,7 @@ export class Tabs {
         const tabIds = this.getTabIds();
         this.setActiveTab(tabIds[tabIds.length - 1]);
       }
-      this.window.webContents.send("tabsChanged", this.getTabIds());
+      this.window.webContents.send("tabsChanged", this.getTabs());
     }
   }
 

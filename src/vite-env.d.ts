@@ -27,7 +27,7 @@ export interface TabsApi {
   reload: () => Promise<void>;
 
   onTabsChanged: (
-    callback: (e: IpcRendererEvent, tabIds: number[]) => void,
+    callback: (e: IpcRendererEvent, tabIds: TabData[]) => void,
   ) => () => void;
   onTabSwitched: (
     callback: (e: IpcRendererEvent, id: number) => void,
