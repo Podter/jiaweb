@@ -1,5 +1,7 @@
 import TitlebarButton from "@/components/Titlebar/TitlebarButton.tsx";
 import {
+  StarLineHorizontal316Regular,
+  MoreHorizontal16Regular,
   Dismiss16Regular,
   Maximize16Regular,
   SquareMultiple16Regular,
@@ -26,7 +28,13 @@ export default function Menu() {
   }, []);
 
   return (
-    <div className="flex justify-end z-50">
+    <div className="flex justify-end items-center z-50">
+      <TitlebarButton>
+        <StarLineHorizontal316Regular />
+      </TitlebarButton>
+      <TitlebarButton className="mr-1">
+        <MoreHorizontal16Regular />
+      </TitlebarButton>
       <TitlebarButton
         className="rounded-none h-12"
         onClick={() => appWindow.minimize()}

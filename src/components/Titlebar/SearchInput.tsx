@@ -8,6 +8,7 @@ export default function SearchInput() {
       <Input
         className={cn("w-[30rem] z-50 h-8 text-center", styles.nodrag)}
         placeholder="Search or enter web address"
+        defaultValue="google.com"
       />
     </div>
   );
