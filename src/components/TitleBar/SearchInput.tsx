@@ -1,4 +1,4 @@
-import styles from "./Titlebar.module.css";
+import styles from "./TitleBar.module.css";
 import { cn } from "@/lib/utils.ts";
 import { Input } from "@/components/ui/input.tsx";
 

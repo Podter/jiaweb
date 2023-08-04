@@ -1,8 +1,8 @@
 import { forwardRef, type ButtonHTMLAttributes } from "react";
-import styles from "./Titlebar.module.css";
+import styles from "./TitleBar.module.css";
 import { cn } from "@/lib/utils";
 
-const TitlebarButton = forwardRef<
+const TitleBarButton = forwardRef<
   HTMLButtonElement,
   ButtonHTMLAttributes<HTMLButtonElement>
 >(({ className, ...props }, ref) => (
@@ -16,6 +16,6 @@ const TitlebarButton = forwardRef<
     {...props}
   />
 ));
-TitlebarButton.displayName = "TitlebarButton";
+TitleBarButton.displayName = "TitleBarButton";
 
-export default TitlebarButton;
+export default TitleBarButton;

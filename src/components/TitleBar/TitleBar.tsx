@@ -1,10 +1,10 @@
-import styles from "./Titlebar.module.css";
+import styles from "./TitleBar.module.css";
 import { cn } from "@/lib/utils.ts";
 import Controls from "./Controls.tsx";
 import SearchInput from "./SearchInput.tsx";
 import Menu from "./Menu.tsx";
 
-export default function Titlebar() {
+export default function TitleBar() {
   return (
     <div
       className={cn(

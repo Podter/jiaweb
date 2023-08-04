@@ -1,9 +1,9 @@
-import Titlebar from "@/components/Titlebar";
+import TitleBar from "@/components/TitleBar";
 
 export default function App() {
   return (
     <>
-      <Titlebar />
+      <TitleBar />
     </>
   );
 }

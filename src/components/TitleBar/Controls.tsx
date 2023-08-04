@@ -1,4 +1,4 @@
-import TitlebarButton from "@/components/Titlebar/TitlebarButton.tsx";
+import TitleBarButton from "@/components/TitleBar/TitleBarButton.tsx";
 import {
   ArrowLeft16Regular,
   ArrowRight16Regular,
@@ -8,15 +8,15 @@ import {
 export default function Controls() {
   return (
     <div className="flex items-center z-50 ml-1">
-      <TitlebarButton>
+      <TitleBarButton>
         <ArrowLeft16Regular />
-      </TitlebarButton>
-      <TitlebarButton>
+      </TitleBarButton>
+      <TitleBarButton>
         <ArrowRight16Regular />
-      </TitlebarButton>
-      <TitlebarButton>
+      </TitleBarButton>
+      <TitleBarButton>
         <Add16Regular />
-      </TitlebarButton>
+      </TitleBarButton>
     </div>
   );
 }
