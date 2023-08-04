@@ -2,8 +2,8 @@ import { ipcMain, ipcRenderer, IpcRendererEvent } from "electron";
 import { Tabs } from "./tabs.ts";
 
 export function initTabsApi(tabs: Tabs) {
-  ipcMain.handle("getActiveTab", () => tabs.getActiveTab());
   ipcMain.handle("getTab", (_, id: number) => tabs.getTab(id));
+  ipcMain.handle("getActiveTabId", () => tabs.getActiveTabId());
   ipcMain.handle("getTabIds", () => tabs.getTabIds());
 
   ipcMain.handle("createTab", () => tabs.createTab());
@@ -16,6 +16,18 @@ export function initTabsApi(tabs: Tabs) {
 }
 
 export const tabsApi = {
+  getTab: (id: number) => ipcRenderer.invoke("getTab", id),
+  getActiveTabId: () => ipcRenderer.invoke("getActiveTabId"),
+  getTabIds: () => ipcRenderer.invoke("getTabIds"),
+
+  createTab: () => ipcRenderer.invoke("createTab"),
+  setActiveTab: (id: number) => ipcRenderer.invoke("setActiveTab", id),
+  closeTab: (id: number) => ipcRenderer.invoke("closeTab", id),
+
+  forward: () => ipcRenderer.invoke("forward"),
+  back: () => ipcRenderer.invoke("back"),
+  reload: () => ipcRenderer.invoke("reload"),
+
   onTabDestroyed: (callback: (e: IpcRendererEvent, tabId: number) => void) => {
     ipcRenderer.on("tabDestroyed", callback);
     return () => ipcRenderer.off("tabDestroyed", callback);
@@ -28,16 +40,4 @@ export const tabsApi = {
     ipcRenderer.on("tabChanged", callback);
     return () => ipcRenderer.off("tabChanged", callback);
   },
-
-  getActiveTab: () => ipcRenderer.invoke("getActiveTab"),
-  getTab: (id: number) => ipcRenderer.invoke("getTab", id),
-  getTabIds: () => ipcRenderer.invoke("getTabIds"),
-
-  createTab: () => ipcRenderer.invoke("createTab"),
-  setActiveTab: (id: number) => ipcRenderer.invoke("setActiveTab", id),
-  closeTab: (id: number) => ipcRenderer.invoke("closeTab", id),
-
-  forward: () => ipcRenderer.invoke("forward"),
-  back: () => ipcRenderer.invoke("back"),
-  reload: () => ipcRenderer.invoke("reload"),
 };

@@ -76,8 +76,12 @@ export class Tabs {
     this.activeTabId = -1;
   }
 
-  getActiveTab() {
+  private getActiveTab() {
     return this.tabs.get(this.activeTabId);
+  }
+
+  getActiveTabId() {
+    return this.activeTabId;
   }
 
   getTab(id: number) {
