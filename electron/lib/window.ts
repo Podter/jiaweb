@@ -1,4 +1,9 @@
-import { ipcMain, type BrowserWindow } from "electron";
+import {
+  ipcMain,
+  type BrowserWindow,
+  ipcRenderer,
+  IpcRendererEvent,
+} from "electron";
 
 export function initWindowApi(win: BrowserWindow) {
   ipcMain.handle("close", () => win.close());
@@ -16,3 +21,16 @@ export function initWindowApi(win: BrowserWindow) {
   win.on("maximize", () => win.webContents.send("onToggleMaximize", true));
   win.on("unmaximize", () => win.webContents.send("onToggleMaximize", false));
 }
+
+export const windowApi = {
+  close: () => ipcRenderer.invoke("close"),
+  minimize: () => ipcRenderer.invoke("minimize"),
+  toggleMaximize: () => ipcRenderer.invoke("toggleMaximize"),
+  isMaximized: () => ipcRenderer.invoke("isMaximized"),
+  onToggleMaximize: (
+    callback: (e: IpcRendererEvent, isMaximized: boolean) => void,
+  ) => {
+    ipcRenderer.on("onToggleMaximize", callback);
+    return () => ipcRenderer.off("onToggleMaximize", callback);
+  },
+};
