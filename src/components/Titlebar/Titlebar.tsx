@@ -1,5 +1,6 @@
 import styles from "./Titlebar.module.css";
 import { cn } from "@/lib/utils.ts";
+import Controls from "./Controls.tsx";
 import SearchInput from "./SearchInput.tsx";
 import Menu from "./Menu.tsx";
 
@@ -12,7 +13,7 @@ export default function Titlebar() {
       )}
     >
       <div className="flex justify-between items-center w-full">
-        <div />
+        <Controls />
         <SearchInput />
         <Menu />
       </div>
