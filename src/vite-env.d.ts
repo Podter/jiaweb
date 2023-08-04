@@ -15,8 +15,8 @@ export interface AppWindowApi {
 
 export interface TabsApi {
   getTab: (id: number) => Promise<TabData>;
-  getActiveTab: () => Promise<number>;
-  getTabIds: () => Promise<number[]>;
+  getActiveTab: () => Promise<TabData>;
+  getTabs: () => Promise<TabData[]>;
 
   createTab: () => Promise<number>;
   setActiveTab: (id: number) => Promise<void>;

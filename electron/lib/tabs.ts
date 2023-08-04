@@ -14,7 +14,7 @@ export class Tab {
   id: number;
   favicons: string[] = [];
 
-  private handleResize = () => {
+  private readonly handleResize = () => {
     const bounds = this.window.getBounds();
     const mainScreen = screen.getPrimaryDisplay();
 
@@ -39,6 +39,10 @@ export class Tab {
     }
   };
 
+  private readonly handleFavicons = (_: unknown, favicons: string[]) => {
+    this.favicons = favicons;
+  };
+
   constructor(private window: BrowserWindow) {
     this.view = new BrowserView();
     this.webContents = this.view.webContents;
@@ -46,14 +50,13 @@ export class Tab {
 
     this.window.addBrowserView(this.view);
 
-    this.webContents.on("page-favicon-updated", (_, favicons) => {
-      this.favicons = favicons;
-    });
+    this.webContents.on("page-favicon-updated", this.handleFavicons);
   }
 
   destroy() {
     this.hide();
     this.window.removeBrowserView(this.view);
+    this.webContents.off("page-favicon-updated", this.handleFavicons);
     if (this.webContents.isDevToolsOpened()) {
       this.webContents.closeDevTools();
     }
@@ -82,8 +85,12 @@ export class Tabs {
     this.activeTabId = -1;
   }
 
-  private getActiveTab() {
+  private getCurrentTab() {
     return this.tabs.get(this.activeTabId);
+  }
+
+  private getTabIds() {
+    return Array.from(this.tabs.keys());
   }
 
   getTab(id: number): TabData | undefined {
@@ -102,12 +109,12 @@ export class Tabs {
     return undefined;
   }
 
-  getActiveTabId() {
-    return this.activeTabId;
+  getActiveTab() {
+    return this.getTab(this.activeTabId);
   }
 
-  getTabIds() {
-    return Array.from(this.tabs.keys());
+  getTabs() {
+    return this.getTabIds().map((id) => this.getTab(id));
   }
 
   createTab() {
@@ -142,15 +149,15 @@ export class Tabs {
   }
 
   forward() {
-    this.getActiveTab()?.webContents.goForward();
+    this.getCurrentTab()?.webContents.goForward();
   }
 
   back() {
-    this.getActiveTab()?.webContents.goBack();
+    this.getCurrentTab()?.webContents.goBack();
   }
 
   reload() {
-    this.getActiveTab()?.webContents.reload();
+    this.getCurrentTab()?.webContents.reload();
   }
 
   destroy() {

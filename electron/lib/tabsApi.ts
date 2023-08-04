@@ -12,8 +12,8 @@ export interface TabData {
 
 export function initTabsApi(tabs: Tabs) {
   ipcMain.handle("getTab", (_, id: number) => tabs.getTab(id));
-  ipcMain.handle("getActiveTabId", () => tabs.getActiveTabId());
-  ipcMain.handle("getTabIds", () => tabs.getTabIds());
+  ipcMain.handle("getActiveTab", () => tabs.getActiveTab());
+  ipcMain.handle("getTabs", () => tabs.getTabs());
 
   ipcMain.handle("createTab", () => tabs.createTab());
   ipcMain.handle("setActiveTab", (_, id: number) => tabs.setActiveTab(id));
@@ -26,8 +26,8 @@ export function initTabsApi(tabs: Tabs) {
 
 export const tabsApi = {
   getTab: (id: number) => ipcRenderer.invoke("getTab", id),
-  getActiveTabId: () => ipcRenderer.invoke("getActiveTabId"),
-  getTabIds: () => ipcRenderer.invoke("getTabIds"),
+  getActiveTab: () => ipcRenderer.invoke("getActiveTab"),
+  getTabs: () => ipcRenderer.invoke("getTabs"),
 
   createTab: () => ipcRenderer.invoke("createTab"),
   setActiveTab: (id: number) => ipcRenderer.invoke("setActiveTab", id),
