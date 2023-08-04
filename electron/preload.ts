@@ -69,48 +69,29 @@ const safeDOM = {
   },
 };
 
-/**
- * https://tobiasahlin.com/spinkit
- * https://connoratherton.com/loaders
- * https://projects.lukehaas.me/css-loaders
- * https://matejkustec.github.io/SpinThatShit
- */
 function useLoading() {
-  const className = `loaders-css__square-spin`;
+  const className = "loading-screen";
   const styleContent = `
-@keyframes square-spin {
-  25% { transform: perspective(100px) rotateX(180deg) rotateY(0); }
-  50% { transform: perspective(100px) rotateX(180deg) rotateY(180deg); }
-  75% { transform: perspective(100px) rotateX(0) rotateY(180deg); }
-  100% { transform: perspective(100px) rotateX(0) rotateY(0); }
+body {
+  margin: 0;
+  background-color: hsl(0, 0%, 100%);
+  color: hsl(222.2, 84%, 4.9%);
 }
-.${className} > div {
-  animation-fill-mode: both;
-  width: 50px;
-  height: 50px;
-  background: #fff;
-  animation: square-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite;
-}
-.app-loading-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
+  
+.${className} {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #282c34;
-  z-index: 9;
 }
     `;
   const oStyle = document.createElement("style");
   const oDiv = document.createElement("div");
 
-  oStyle.id = "app-loading-style";
   oStyle.innerHTML = styleContent;
-  oDiv.className = "app-loading-wrap";
-  oDiv.innerHTML = `<div class="${className}"><div></div></div>`;
+  oDiv.classList.add(className);
+  oDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path fill="currentColor" d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>`;
 
   return {
     appendLoading() {
@@ -126,6 +107,7 @@ function useLoading() {
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const { appendLoading, removeLoading } = useLoading();
 domReady().then(appendLoading);
 
