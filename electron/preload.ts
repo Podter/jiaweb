@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
+import { contextBridge } from "electron";
 import { windowApi } from "./lib/window.ts";
 import { tabsApi } from "./lib/tabsApi.ts";
 
