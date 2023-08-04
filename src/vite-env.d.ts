@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 import type { IpcRendererEvent } from "electron";
+import type { TabData } from "../electron/lib/tabsApi.ts";
 
 export interface AppWindowApi {
   close: () => Promise<void>;
@@ -23,8 +24,8 @@ export interface TabsApi {
     callback: (e: IpcRendererEvent, tabId: number) => void,
   ) => () => void;
 
+  getTab: (id: number) => Promise<TabData>;
   getActiveTab: () => Promise<number>;
-  getTab: (id: number) => Promise<number>;
   getTabIds: () => Promise<number[]>;
 
   createTab: () => Promise<number>;

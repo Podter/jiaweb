@@ -5,6 +5,7 @@ import {
   screen,
 } from "electron";
 import { toolbarHeight } from "../constants.ts";
+import type { TabData } from "./tabsApi.ts";
 
 export class Tab {
   private readonly view: BrowserView;
@@ -80,12 +81,23 @@ export class Tabs {
     return this.tabs.get(this.activeTabId);
   }
 
-  getActiveTabId() {
-    return this.activeTabId;
+  getTab(id: number): TabData | undefined {
+    const tab = this.tabs.get(id);
+    if (tab) {
+      return {
+        id: tab.id,
+        url: tab.webContents.getURL(),
+        title: tab.webContents.getTitle(),
+        canGoBack: tab.webContents.canGoBack(),
+        canGoForward: tab.webContents.canGoForward(),
+      };
+    }
+
+    return undefined;
   }
 
-  getTab(id: number) {
-    return this.tabs.get(id);
+  getActiveTabId() {
+    return this.activeTabId;
   }
 
   getTabIds() {
@@ -111,7 +123,7 @@ export class Tabs {
   }
 
   closeTab(id: number) {
-    const tab = this.getTab(id);
+    const tab = this.tabs.get(id);
     if (tab) {
       tab.destroy();
       this.tabs.delete(id);

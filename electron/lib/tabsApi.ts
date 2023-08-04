@@ -1,6 +1,14 @@
 import { ipcMain, ipcRenderer, IpcRendererEvent } from "electron";
 import { Tabs } from "./tabs.ts";
 
+export interface TabData {
+  id: number;
+  url: string;
+  title: string;
+  canGoBack: boolean;
+  canGoForward: boolean;
+}
+
 export function initTabsApi(tabs: Tabs) {
   ipcMain.handle("getTab", (_, id: number) => tabs.getTab(id));
   ipcMain.handle("getActiveTabId", () => tabs.getActiveTabId());
