@@ -14,16 +14,6 @@ export interface AppWindowApi {
 }
 
 export interface TabsApi {
-  onTabDestroyed: (
-    callback: (e: IpcRendererEvent, tabId: number) => void,
-  ) => () => void;
-  onTabCreated: (
-    callback: (e: IpcRendererEvent, tabId: number) => void,
-  ) => () => void;
-  onTabChanged: (
-    callback: (e: IpcRendererEvent, tabId: number) => void,
-  ) => () => void;
-
   getTab: (id: number) => Promise<TabData>;
   getActiveTab: () => Promise<number>;
   getTabIds: () => Promise<number[]>;
@@ -35,6 +25,13 @@ export interface TabsApi {
   forward: () => Promise<void>;
   back: () => Promise<void>;
   reload: () => Promise<void>;
+
+  onTabsChanged: (
+    callback: (e: IpcRendererEvent, tabIds: number[]) => void,
+  ) => () => void;
+  onTabSwitched: (
+    callback: (e: IpcRendererEvent, id: number) => void,
+  ) => () => void;
 }
 
 declare global {

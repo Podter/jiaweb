@@ -36,16 +36,14 @@ export const tabsApi = {
   back: () => ipcRenderer.invoke("back"),
   reload: () => ipcRenderer.invoke("reload"),
 
-  onTabDestroyed: (callback: (e: IpcRendererEvent, tabId: number) => void) => {
-    ipcRenderer.on("tabDestroyed", callback);
-    return () => ipcRenderer.off("tabDestroyed", callback);
+  onTabsChanged: (
+    callback: (e: IpcRendererEvent, tabIds: number[]) => void,
+  ) => {
+    ipcRenderer.on("tabsChanged", callback);
+    return () => ipcRenderer.off("tabsChanged", callback);
   },
-  onTabCreated: (callback: (e: IpcRendererEvent, tabId: number) => void) => {
-    ipcRenderer.on("tabCreated", callback);
-    return () => ipcRenderer.off("tabCreated", callback);
-  },
-  onTabChanged: (callback: (e: IpcRendererEvent, tabId: number) => void) => {
-    ipcRenderer.on("tabChanged", callback);
-    return () => ipcRenderer.off("tabChanged", callback);
+  onTabSwitched: (callback: (e: IpcRendererEvent, id: number) => void) => {
+    ipcRenderer.on("tabSwitched", callback);
+    return () => ipcRenderer.off("tabSwitched", callback);
   },
 };
