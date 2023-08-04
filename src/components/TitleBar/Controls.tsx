@@ -5,16 +5,18 @@ import {
   Add16Regular,
 } from "@fluentui/react-icons";
 
+const { tabs } = window;
+
 export default function Controls() {
   return (
     <div className="flex items-center z-50 ml-1">
-      <TitleBarButton>
+      <TitleBarButton onClick={() => tabs.back()}>
         <ArrowLeft16Regular />
       </TitleBarButton>
-      <TitleBarButton>
+      <TitleBarButton onClick={() => tabs.forward()}>
         <ArrowRight16Regular />
       </TitleBarButton>
-      <TitleBarButton>
+      <TitleBarButton onClick={() => tabs.createTab()}>
         <Add16Regular />
       </TitleBarButton>
     </div>

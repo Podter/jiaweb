@@ -8,6 +8,8 @@ import {
 } from "@fluentui/react-icons";
 import { Button } from "@/components/ui/button.tsx";
 
+const { tabs } = window;
+
 export default function SearchInput() {
   return (
     <div className="flex justify-center items-center absolute top-0 bottom-0 left-0 right-0">
@@ -34,7 +36,12 @@ export default function SearchInput() {
           <Button variant="ghost" size="sm" className="h-6 w-6 p-0 z-50">
             <Star12Regular />
           </Button>
-          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 z-50">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-6 w-6 p-0 z-50"
+            onClick={() => tabs.reload()}
+          >
             <ArrowClockwise12Regular />
           </Button>
         </div>
