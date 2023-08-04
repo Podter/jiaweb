@@ -12,6 +12,7 @@ export class Tab {
 
   webContents: WebContents;
   id: number;
+  favicons: string[] = [];
 
   private handleResize = () => {
     const bounds = this.window.getBounds();
@@ -44,6 +45,10 @@ export class Tab {
     this.id = this.webContents.id;
 
     this.window.addBrowserView(this.view);
+
+    this.webContents.on("page-favicon-updated", (_, favicons) => {
+      this.favicons = favicons;
+    });
   }
 
   destroy() {
@@ -90,6 +95,7 @@ export class Tabs {
         title: tab.webContents.getTitle(),
         canGoBack: tab.webContents.canGoBack(),
         canGoForward: tab.webContents.canGoForward(),
+        favicons: tab.favicons,
       };
     }
 

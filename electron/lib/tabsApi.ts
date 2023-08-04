@@ -7,6 +7,7 @@ export interface TabData {
   title: string;
   canGoBack: boolean;
   canGoForward: boolean;
+  favicons: string[];
 }
 
 export function initTabsApi(tabs: Tabs) {
