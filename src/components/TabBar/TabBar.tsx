@@ -7,7 +7,7 @@ const { tabs: tabsApi } = window;
 
 export default function TabBar() {
   const [tabs, setTabs] = useState<number[]>([]);
-  const activeTabId = useActiveTab();
+  const activeTab = useActiveTab();
 
   useEffect(() => {
     tabsApi.getTabIds().then((tabs) => setTabs(tabs));
@@ -27,7 +27,7 @@ export default function TabBar() {
       )}
     >
       {tabs.map((tab) => (
-        <Tab key={tab} tabId={tab} selected={activeTabId?.id === tab} />
+        <Tab key={tab} tabId={tab} selected={activeTab?.id === tab} />
       ))}
     </div>
   );
