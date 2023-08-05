@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import path from "node:path";
 import { initWindowApi } from "./lib/window.ts";
-import { toolbarHeight } from "./constants.ts";
+import { titleBarHeight, tabBarHeight } from "./constants.ts";
 import { Tabs } from "./lib/tabs.ts";
 import { initTabsApi } from "./lib/tabsApi.ts";
 
@@ -22,7 +22,7 @@ async function createWindow() {
       // webviewTag: true,
     },
     width: 1280,
-    height: 720 + toolbarHeight,
+    height: 720 + titleBarHeight + tabBarHeight,
     frame: false,
     autoHideMenuBar: true,
     titleBarStyle: "hidden",

@@ -4,7 +4,7 @@ import {
   type WebContents,
   screen,
 } from "electron";
-import { newTabUrl, toolbarHeight } from "../constants.ts";
+import { newTabUrl, titleBarHeight, tabBarHeight } from "../constants.ts";
 import type { TabData } from "./tabsApi.ts";
 
 export class Tab {
@@ -17,12 +17,14 @@ export class Tab {
   private readonly handleResize = () => {
     const bounds = this.window.getBounds();
     const mainScreen = screen.getPrimaryDisplay();
+    const tabs = this.getTabs();
+    const height = titleBarHeight + (tabs > 1 ? tabBarHeight : 0);
 
     this.view.setBounds({
       x: 0,
-      y: toolbarHeight,
+      y: height,
       width: bounds.width,
-      height: bounds.height - toolbarHeight,
+      height: bounds.height - height,
     });
 
     if (this.window.isMaximized() || this.window.isFullScreen()) {
@@ -32,9 +34,9 @@ export class Tab {
       );
       this.view.setBounds({
         x: 0,
-        y: toolbarHeight,
+        y: height,
         width: mainScreen.workArea.width,
-        height: mainScreen.workArea.height - toolbarHeight,
+        height: mainScreen.workArea.height - height,
       });
     }
   };
@@ -43,7 +45,10 @@ export class Tab {
     this.favicons = favicons;
   };
 
-  constructor(private window: BrowserWindow) {
+  constructor(
+    private window: BrowserWindow,
+    private readonly getTabs: () => number,
+  ) {
     this.view = new BrowserView();
     this.webContents = this.view.webContents;
     this.id = this.webContents.id;
@@ -118,7 +123,7 @@ export class Tabs {
   }
 
   createTab() {
-    const tab = new Tab(this.window);
+    const tab = new Tab(this.window, () => this.getTabs().length);
     tab.webContents.loadURL(newTabUrl);
     this.tabs.set(tab.id, tab);
     this.setActiveTab(tab.id);
