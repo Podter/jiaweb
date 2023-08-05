@@ -30,6 +30,7 @@ async function createWindow() {
   initWindowApi(win);
 
   tabs = new Tabs(win);
+  tabs.createTab();
   initTabsApi(tabs);
 
   if (VITE_DEV_SERVER_URL) {
