@@ -8,7 +8,7 @@ const TitleBarButton = forwardRef<
 >(({ className, ...props }, ref) => (
   <button
     className={cn(
-      "inline-flex rounded-md h-10 w-10 justify-center items-center transition-colors hover:bg-accent hover:text-accent-foreground",
+      "inline-flex rounded-md h-10 w-10 justify-center items-center transition-colors hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50",
       styles.nodrag,
       className,
     )}
