@@ -56,9 +56,12 @@ export class Tab {
   };
 
   private readonly fireDataChanged = () => {
+    this.url = this.webContents.getURL();
     this.canGoBack = this.webContents.canGoBack();
     this.canGoForward = this.webContents.canGoForward();
-    this.window.webContents.send("tabDataChanged", this.id, this.getTabData());
+    const tabData = this.getTabData();
+    this.window.webContents.send("tabDataChanged", this.id, tabData);
+    console.log(tabData);
   };
 
   constructor(
@@ -76,14 +79,8 @@ export class Tab {
         this.isLoading = true;
         this.fireDataChanged();
       })
-      .on("did-start-navigation", ({ url }) => {
-        this.url = url;
-        this.fireDataChanged();
-      })
-      .on("will-redirect", ({ url }) => {
-        this.url = url;
-        this.fireDataChanged();
-      })
+      .on("did-start-navigation", () => this.fireDataChanged())
+      .on("will-redirect", () => this.fireDataChanged())
       .on("page-title-updated", (_, title) => {
         this.title = title;
         this.fireDataChanged();
@@ -213,6 +210,13 @@ export class Tabs {
     const tab = this.getTab(id);
     if (tab) {
       tab.webContents.stop();
+    }
+  }
+
+  setUrl(id: number, url: string) {
+    const tab = this.getTab(id);
+    if (tab) {
+      tab.webContents.loadURL(url);
     }
   }
 

@@ -18,6 +18,9 @@ export function initTabsApi(tabs: Tabs) {
   ipcMain.handle("back", (_, id: number) => tabs.back(id));
   ipcMain.handle("reload", (_, id: number) => tabs.reload(id));
   ipcMain.handle("stop", (_, id: number) => tabs.stop(id));
+  ipcMain.handle("setUrl", (_, id: number, url: string) =>
+    tabs.setUrl(id, url),
+  );
 }
 
 export const tabsApi = {
@@ -33,6 +36,7 @@ export const tabsApi = {
   back: (id: number) => ipcRenderer.invoke("back", id),
   reload: (id: number) => ipcRenderer.invoke("reload", id),
   stop: (id: number) => ipcRenderer.invoke("stop", id),
+  setUrl: (id: number, url: string) => ipcRenderer.invoke("setUrl", id, url),
 
   onTabListChanged: (
     callback: (e: IpcRendererEvent, tabIds: number[]) => void,
