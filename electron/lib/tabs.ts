@@ -60,7 +60,9 @@ export class Tab {
 
   destroy() {
     this.hide();
-    this.window.removeBrowserView(this.view);
+    if (!this.window.isDestroyed()) {
+      this.window.removeBrowserView(this.view);
+    }
     this.webContents.off("page-favicon-updated", this.handleFavicons);
     if (this.webContents.isDevToolsOpened()) {
       this.webContents.closeDevTools();
