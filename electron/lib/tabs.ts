@@ -4,7 +4,7 @@ import {
   type WebContents,
   screen,
 } from "electron";
-import { toolbarHeight } from "../constants.ts";
+import { newTabUrl, toolbarHeight } from "../constants.ts";
 import type { TabData } from "./tabsApi.ts";
 
 export class Tab {
@@ -119,7 +119,7 @@ export class Tabs {
 
   createTab() {
     const tab = new Tab(this.window);
-    tab.webContents.loadURL("https://google.com");
+    tab.webContents.loadURL(newTabUrl);
     this.tabs.set(tab.id, tab);
     this.setActiveTab(tab.id);
     this.window.webContents.send("tabsChanged", this.getTabs());
