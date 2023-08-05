@@ -5,10 +5,16 @@ import {
   Star12Regular,
   ArrowClockwise12Regular,
   LockClosed12Regular,
+  Dismiss12Regular,
 } from "@fluentui/react-icons";
 import { Button } from "@/components/ui/button.tsx";
+import { useActiveTab } from "@/contexts/ActiveTabContext.tsx";
+
+const { tabs } = window;
 
 export default function SearchInput() {
+  const activeTab = useActiveTab();
+
   return (
     <div className="flex justify-center items-center absolute top-0 bottom-0 left-0 right-0">
       <div
@@ -34,8 +40,24 @@ export default function SearchInput() {
           <Button variant="ghost" size="sm" className="h-6 w-6 p-0 z-50">
             <Star12Regular />
           </Button>
-          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 z-50">
-            <ArrowClockwise12Regular />
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-6 w-6 p-0 z-50"
+            onClick={() => {
+              if (!activeTab) return;
+              if (activeTab.isLoading) {
+                tabs.stop(activeTab.id);
+              } else {
+                tabs.reload(activeTab.id);
+              }
+            }}
+          >
+            {activeTab?.isLoading ? (
+              <Dismiss12Regular />
+            ) : (
+              <ArrowClockwise12Regular />
+            )}
           </Button>
         </div>
       </div>

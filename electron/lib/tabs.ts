@@ -209,6 +209,13 @@ export class Tabs {
     }
   }
 
+  stop(id: number) {
+    const tab = this.getTab(id);
+    if (tab) {
+      tab.webContents.stop();
+    }
+  }
+
   destroy() {
     this.tabs.forEach((tab) => tab.destroy());
   }
