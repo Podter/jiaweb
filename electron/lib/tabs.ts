@@ -5,14 +5,28 @@ import {
   screen,
 } from "electron";
 import { newTabUrl, titleBarHeight, tabBarHeight } from "../constants.ts";
-import type { TabData } from "./tabsApi.ts";
+
+export interface TabData {
+  id: number;
+  title: string;
+  url: string;
+  favicon: string;
+  isLoading: boolean;
+  canGoBack: boolean;
+  canGoForward: boolean;
+}
 
 export class Tab {
   private readonly view: BrowserView;
-
   webContents: WebContents;
+
   id: number;
-  favicons: string[] = [];
+  title: string = "";
+  url: string = "";
+  favicon: string = "";
+  isLoading: boolean = false;
+  canGoBack: boolean = false;
+  canGoForward: boolean = false;
 
   private readonly handleResize = () => {
     const bounds = this.window.getBounds();
@@ -41,8 +55,10 @@ export class Tab {
     }
   };
 
-  private readonly handleFavicons = (_: unknown, favicons: string[]) => {
-    this.favicons = favicons;
+  private readonly fireDataChanged = () => {
+    this.canGoBack = this.webContents.canGoBack();
+    this.canGoForward = this.webContents.canGoForward();
+    this.window.webContents.send("tabDataChanged", this.id, this.getTabData());
   };
 
   constructor(
@@ -55,7 +71,44 @@ export class Tab {
 
     this.window.addBrowserView(this.view);
 
-    this.webContents.on("page-favicon-updated", this.handleFavicons);
+    this.webContents
+      .on("did-start-loading", () => {
+        this.isLoading = true;
+        this.fireDataChanged();
+      })
+      .on("did-start-navigation", ({ url }) => {
+        this.url = url;
+        this.fireDataChanged();
+      })
+      .on("will-redirect", ({ url }) => {
+        this.url = url;
+        this.fireDataChanged();
+      })
+      .on("page-title-updated", (_, title) => {
+        this.title = title;
+        this.fireDataChanged();
+      })
+      .on("page-favicon-updated", (_, favicons) => {
+        this.favicon = favicons[0];
+        this.fireDataChanged();
+      })
+      .on("did-stop-loading", () => {
+        this.isLoading = false;
+        this.fireDataChanged();
+      })
+      .on("dom-ready", () => this.webContents.focus());
+  }
+
+  getTabData(): TabData {
+    return {
+      id: this.id,
+      title: this.title,
+      url: this.url,
+      favicon: this.favicon,
+      isLoading: this.isLoading,
+      canGoBack: this.canGoBack,
+      canGoForward: this.canGoForward,
+    };
   }
 
   destroy() {
@@ -63,10 +116,10 @@ export class Tab {
     if (!this.window.isDestroyed()) {
       this.window.removeBrowserView(this.view);
     }
-    this.webContents.off("page-favicon-updated", this.handleFavicons);
     if (this.webContents.isDevToolsOpened()) {
       this.webContents.closeDevTools();
     }
+    this.webContents.removeAllListeners();
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.webContents.destroy();
@@ -92,44 +145,24 @@ export class Tabs {
     this.activeTabId = -1;
   }
 
-  private getCurrentTab() {
-    return this.tabs.get(this.activeTabId);
+  getTab(id: number) {
+    return this.tabs.get(id);
   }
 
-  private getTabIds() {
+  getActiveTabId() {
+    return this.activeTabId;
+  }
+
+  getTabIds() {
     return Array.from(this.tabs.keys());
   }
 
-  getTab(id: number): TabData | undefined {
-    const tab = this.tabs.get(id);
-    if (tab) {
-      return {
-        id: tab.id,
-        url: tab.webContents.getURL(),
-        title: tab.webContents.getTitle(),
-        canGoBack: tab.webContents.canGoBack(),
-        canGoForward: tab.webContents.canGoForward(),
-        favicons: tab.favicons,
-      };
-    }
-
-    return undefined;
-  }
-
-  getActiveTab() {
-    return this.getTab(this.activeTabId);
-  }
-
-  getTabs() {
-    return this.getTabIds().map((id) => this.getTab(id));
-  }
-
   createTab() {
-    const tab = new Tab(this.window, () => this.getTabs().length);
+    const tab = new Tab(this.window, () => this.getTabIds().length);
     tab.webContents.loadURL(newTabUrl);
     this.tabs.set(tab.id, tab);
     this.setActiveTab(tab.id);
-    this.window.webContents.send("tabsChanged", this.getTabs());
+    this.window.webContents.send("tabListChanged", this.getTabIds());
     return tab.id;
   }
 
@@ -137,13 +170,13 @@ export class Tabs {
     if (this.tabs.has(id)) {
       this.activeTabId = id;
       this.tabs.forEach((tab) => tab.hide());
-      this.tabs.get(id)?.show();
+      this.getTab(id)?.show();
       this.window.webContents.send("tabSwitched", id);
     }
   }
 
   closeTab(id: number) {
-    const tab = this.tabs.get(id);
+    const tab = this.getTab(id);
     if (tab) {
       tab.destroy();
       this.tabs.delete(id);
@@ -151,20 +184,29 @@ export class Tabs {
         const tabIds = this.getTabIds();
         this.setActiveTab(tabIds[tabIds.length - 1]);
       }
-      this.window.webContents.send("tabsChanged", this.getTabs());
+      this.window.webContents.send("tabListChanged", this.getTabIds());
     }
   }
 
-  forward() {
-    this.getCurrentTab()?.webContents.goForward();
+  forward(id: number) {
+    const tab = this.getTab(id);
+    if (tab) {
+      tab.webContents.goForward();
+    }
   }
 
-  back() {
-    this.getCurrentTab()?.webContents.goBack();
+  back(id: number) {
+    const tab = this.getTab(id);
+    if (tab) {
+      tab.webContents.goBack();
+    }
   }
 
-  reload() {
-    this.getCurrentTab()?.webContents.reload();
+  reload(id: number) {
+    const tab = this.getTab(id);
+    if (tab) {
+      tab.webContents.reload();
+    }
   }
 
   destroy() {

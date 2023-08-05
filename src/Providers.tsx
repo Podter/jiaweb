@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
-import { TabsProvider } from "@/contexts/TabsContext.tsx";
+import { ActiveTabProvider } from "@/contexts/ActiveTabContext.tsx";
 
 export default function Providers({ children }: PropsWithChildren) {
-  return <TabsProvider>{children}</TabsProvider>;
+  return <ActiveTabProvider>{children}</ActiveTabProvider>;
 }

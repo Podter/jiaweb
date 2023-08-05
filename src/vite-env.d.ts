@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 import type { IpcRendererEvent } from "electron";
-import type { TabData } from "../electron/lib/tabsApi.ts";
+import type { TabData } from "../electron/lib/tabs.ts";
 
 export interface AppWindowApi {
   close: () => Promise<void>;
@@ -15,22 +15,25 @@ export interface AppWindowApi {
 
 export interface TabsApi {
   getTab: (id: number) => Promise<TabData>;
-  getActiveTab: () => Promise<TabData>;
-  getTabs: () => Promise<TabData[]>;
+  getActiveTabId: () => Promise<number>;
+  getTabIds: () => Promise<number[]>;
 
   createTab: () => Promise<number>;
   setActiveTab: (id: number) => Promise<void>;
   closeTab: (id: number) => Promise<void>;
 
-  forward: () => Promise<void>;
-  back: () => Promise<void>;
-  reload: () => Promise<void>;
+  forward: (id: number) => Promise<void>;
+  back: (id: number) => Promise<void>;
+  reload: (id: number) => Promise<void>;
 
-  onTabsChanged: (
-    callback: (e: IpcRendererEvent, tabIds: TabData[]) => void,
+  onTabListChanged: (
+    callback: (e: IpcRendererEvent, tabIds: number[]) => void,
   ) => () => void;
   onTabSwitched: (
     callback: (e: IpcRendererEvent, id: number) => void,
+  ) => () => void;
+  onTabDataChanged: (
+    callback: (e: IpcRendererEvent, id: number, data: TabData) => void,
   ) => () => void;
 }
 
