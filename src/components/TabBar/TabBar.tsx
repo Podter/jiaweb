@@ -1,9 +1,23 @@
 import Tab from "./Tab.tsx";
 import { useTabs } from "@/contexts/TabsContext.tsx";
 import { cn } from "@/lib/utils.ts";
+import { useState, useEffect } from "react";
+
+const { tabs: tabsApi } = window;
 
 export default function TabBar() {
   const tabs = useTabs();
+  const [selectedTab, setSelectedTab] = useState(-1);
+
+  useEffect(() => {
+    tabsApi.getActiveTab().then((tab) => setSelectedTab(tab.id));
+
+    const unlisten = tabsApi.onTabSwitched((_, id) => setSelectedTab(id));
+
+    return () => {
+      unlisten();
+    };
+  }, []);
 
   return (
     <div
@@ -13,7 +27,7 @@ export default function TabBar() {
       )}
     >
       {tabs.map((tab) => (
-        <Tab key={tab.id} tab={tab} />
+        <Tab key={tab.id} tab={tab} selected={selectedTab === tab.id} />
       ))}
     </div>
   );
