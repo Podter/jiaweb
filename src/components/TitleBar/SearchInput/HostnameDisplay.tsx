@@ -3,11 +3,14 @@ import {
   ArrowClockwise12Regular,
   Dismiss12Regular,
   LockClosed12Regular,
+  LockOpen12Regular,
   Star12Regular,
 } from "@fluentui/react-icons";
 import { Input } from "@/components/ui/input.tsx";
 import { useActiveTab } from "@/contexts/ActiveTabContext.tsx";
 import { useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
+import icon90RingWithBg from "@iconify/icons-svg-spinners/90-ring-with-bg";
 
 const { tabs } = window;
 
@@ -20,6 +23,7 @@ export default function HostnameDisplay({ onClick, overrideHostname }: Props) {
   const activeTab = useActiveTab();
 
   const [hostname, setHostname] = useState("");
+  const [secure, setSecure] = useState(false);
 
   useEffect(() => {
     try {
@@ -29,8 +33,10 @@ export default function HostnameDisplay({ onClick, overrideHostname }: Props) {
       }
       const url = new URL(activeTab.url);
       setHostname(url.hostname);
+      setSecure(url.protocol === "https:");
     } catch {
       setHostname("");
+      setSecure(false);
     }
   }, [activeTab]);
 
@@ -41,7 +47,13 @@ export default function HostnameDisplay({ onClick, overrideHostname }: Props) {
         size="sm"
         className="h-6 w-6 p-0 absolute left-1 z-50"
       >
-        <LockClosed12Regular />
+        {activeTab?.isLoading ? (
+          <Icon icon={icon90RingWithBg} fontSize={12} />
+        ) : secure ? (
+          <LockClosed12Regular color="#16a34a" />
+        ) : (
+          <LockOpen12Regular color="#e11d48" />
+        )}
       </Button>
       <Input
         className="h-8 text-center !z-0"
