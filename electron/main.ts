@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, Menu } from "electron";
 import path from "node:path";
 import { initWindowApi } from "./lib/window.ts";
 import { titleBarHeight, tabBarHeight } from "./constants.ts";
@@ -15,6 +15,8 @@ let tabs: Tabs | null;
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
 async function createWindow() {
+  Menu.setApplicationMenu(null);
+
   win = new BrowserWindow({
     icon: path.join(process.env.PUBLIC, "electron-vite.svg"),
     webPreferences: {

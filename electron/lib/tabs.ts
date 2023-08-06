@@ -73,6 +73,8 @@ export class Tab {
     this.id = this.webContents.id;
 
     this.webContents.loadURL(this.initialUrl ?? newTabUrl);
+    if (initialUrl) this.title = initialUrl;
+
     this.window.addBrowserView(this.view);
 
     this.webContents
@@ -94,7 +96,13 @@ export class Tab {
         this.isLoading = false;
         this.fireDataChanged();
       })
-      .on("dom-ready", () => this.webContents.focus());
+      .on("dom-ready", () => this.webContents.focus())
+      .setWindowOpenHandler(({ url, disposition }) => {
+        if (disposition === "new-window") return { action: "allow" };
+
+        tabs.createTab(url);
+        return { action: "deny" };
+      });
   }
 
   getTabData(): TabData {
