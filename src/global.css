@@ -76,7 +76,7 @@
     @apply bg-background text-foreground font-sans antialiased select-none;
   }
   #root {
-    @apply relative flex flex-col w-full min-h-screen
+    @apply relative flex flex-col w-full min-h-screen;
   }
 
   ::selection {
