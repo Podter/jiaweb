@@ -5,7 +5,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type Dispatch, type SetStateAction, useEffect, useRef } from "react";
-import { useActiveTab } from "@/contexts/ActiveTabContext.tsx";
+import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
 import createUrl from "@/lib/createUrl.ts";
 
 const { tabs } = window;

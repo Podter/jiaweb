@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils.ts";
 import HostnameDisplay from "./HostnameDisplay.tsx";
 import { useEffect, useState } from "react";
 import UrlInput from "./UrlInput.tsx";
-import { useActiveTab } from "@/contexts/ActiveTabContext.tsx";
+import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
 
 export default function SearchInput() {
   const activeTab = useActiveTab();

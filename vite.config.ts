@@ -29,4 +29,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        toolbar: path.resolve(__dirname, "./src/toolbar/index.html"),
+      },
+    },
+  },
 });

@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from "react";
-import type { TabData } from "../../electron/lib/tabs.ts";
+import type { TabData } from "../../../electron/lib/tabs.ts";
 
 const { tabs } = window;
 

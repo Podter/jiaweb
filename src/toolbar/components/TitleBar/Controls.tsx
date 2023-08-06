@@ -1,10 +1,10 @@
-import TitleBarButton from "@/components/TitleBar/TitleBarButton.tsx";
+import TitleBarButton from "./TitleBarButton.tsx";
 import {
   ArrowLeft16Regular,
   ArrowRight16Regular,
   Add16Regular,
 } from "@fluentui/react-icons";
-import { useActiveTab } from "@/contexts/ActiveTabContext.tsx";
+import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
 
 const { tabs } = window;
 

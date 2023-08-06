@@ -48,9 +48,11 @@ async function createWindow() {
   initTabsApi(tabs);
 
   if (VITE_DEV_SERVER_URL) {
-    await win.loadURL(VITE_DEV_SERVER_URL);
+    await win.loadURL(VITE_DEV_SERVER_URL + "src/toolbar/index.html");
   } else {
-    await win.loadFile(path.join(process.env.DIST, "index.html"));
+    await win.loadFile(
+      path.join(process.env.DIST, "src", "toolbar", "index.html"),
+    );
   }
 }
 

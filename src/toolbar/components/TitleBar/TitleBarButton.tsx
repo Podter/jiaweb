@@ -1,6 +1,6 @@
 import { forwardRef, type ButtonHTMLAttributes } from "react";
 import styles from "./TitleBar.module.css";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.ts";
 
 const TitleBarButton = forwardRef<
   HTMLButtonElement,

@@ -5,9 +5,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu.tsx";
 import { MoreHorizontal16Regular } from "@fluentui/react-icons";
-import TitleBarButton from "@/components/TitleBar/TitleBarButton.tsx";
+import TitleBarButton from "../TitleBarButton.tsx";
 
 export default function MoreMenu() {
   return (

@@ -2,7 +2,7 @@ import { forwardRef, type HTMLAttributes, useState, useEffect } from "react";
 import { cn } from "@/lib/utils.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Dismiss12Regular, DocumentRegular } from "@fluentui/react-icons";
-import type { TabData } from "../../../electron/lib/tabs.ts";
+import type { TabData } from "../../../../electron/lib/tabs.ts";
 import { Icon } from "@iconify/react";
 import icon90RingWithBg from "@iconify/icons-svg-spinners/90-ring-with-bg";
 

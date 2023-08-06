@@ -1,4 +1,4 @@
-import TitleBarButton from "@/components/TitleBar/TitleBarButton.tsx";
+import TitleBarButton from "../TitleBarButton.tsx";
 import {
   StarLineHorizontal316Regular,
   Dismiss16Regular,

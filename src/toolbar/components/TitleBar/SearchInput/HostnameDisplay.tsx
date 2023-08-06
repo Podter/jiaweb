@@ -7,7 +7,7 @@ import {
   Star12Regular,
 } from "@fluentui/react-icons";
 import { Input } from "@/components/ui/input.tsx";
-import { useActiveTab } from "@/contexts/ActiveTabContext.tsx";
+import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import icon90RingWithBg from "@iconify/icons-svg-spinners/90-ring-with-bg";

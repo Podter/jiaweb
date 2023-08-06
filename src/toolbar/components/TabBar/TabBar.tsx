@@ -1,6 +1,6 @@
 import Tab from "./Tab.tsx";
 import { cn } from "@/lib/utils.ts";
-import { useActiveTab } from "@/contexts/ActiveTabContext.tsx";
+import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
 import { useEffect, useState } from "react";
 
 const { tabs: tabsApi } = window;
