@@ -4,9 +4,11 @@ import {
   type WebContents,
   screen,
 } from "electron";
-import { newTabUrl, titleBarHeight, tabBarHeight } from "../constants.ts";
+import { titleBarHeight, tabBarHeight } from "../constants.ts";
 import contextMenu from "electron-context-menu";
 import { initWebviewContextMenu } from "./contextMenu.ts";
+import { VITE_DEV_SERVER_URL } from "../main.ts";
+import path from "node:path";
 
 export interface TabData {
   id: number;
@@ -75,8 +77,18 @@ export class Tab {
     this.webContents = this.view.webContents;
     this.id = this.webContents.id;
 
-    this.webContents.loadURL(this.initialUrl ?? newTabUrl);
-    if (initialUrl) this.title = initialUrl;
+    if (this.initialUrl) {
+      this.title = this.initialUrl;
+      this.webContents.loadURL(this.initialUrl);
+    } else {
+      if (VITE_DEV_SERVER_URL) {
+        this.webContents.loadURL(VITE_DEV_SERVER_URL + "src/newtab/index.html");
+      } else {
+        this.webContents.loadFile(
+          path.join(process.env.DIST, "src", "newtab", "index.html"),
+        );
+      }
+    }
 
     this.disposeContextMenu = contextMenu(
       initWebviewContextMenu(this, this.tabs),
