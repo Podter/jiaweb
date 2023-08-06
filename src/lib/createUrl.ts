@@ -10,11 +10,13 @@ function isValidUrl(url: string): boolean {
 }
 
 export default function createUrl(input: string): string {
+  const parsedUrl = parseDomain(input);
+
   if (isValidUrl(input)) {
     return input;
   } else if (
-    parseDomain(input).type !==
-    (ParseResultType.Invalid || ParseResultType.NotListed)
+    parsedUrl.type !== ParseResultType.Invalid &&
+    parsedUrl.type !== ParseResultType.NotListed
   ) {
     const parsedUrl = new URL(`https://${input}`);
     return `${parsedUrl.protocol}//${parsedUrl.hostname}`;
