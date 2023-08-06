@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button.tsx";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useRef } from "react";
 import { useActiveTab } from "@/contexts/ActiveTabContext.tsx";
 import createUrl from "@/lib/createUrl.ts";
 
@@ -16,9 +16,10 @@ const formSchema = z.object({
 
 type Props = {
   cancel: () => void;
+  setOverrideHostname: Dispatch<SetStateAction<string | undefined>>;
 };
 
-export default function UrlInput({ cancel }: Props) {
+export default function UrlInput({ cancel, setOverrideHostname }: Props) {
   const activeTab = useActiveTab();
 
   const { handleSubmit, register, setFocus, setValue } = useForm<
@@ -40,7 +41,11 @@ export default function UrlInput({ cancel }: Props) {
 
   function onSubmit({ url }: z.infer<typeof formSchema>) {
     if (activeTab) {
-      tabs.setUrl(activeTab.id, createUrl(url));
+      const newUrl = createUrl(url);
+      tabs.setUrl(activeTab.id, newUrl);
+
+      const urlObj = new URL(newUrl);
+      setOverrideHostname(urlObj.hostname);
     }
     cancel();
   }

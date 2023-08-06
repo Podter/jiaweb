@@ -13,9 +13,10 @@ const { tabs } = window;
 
 type Props = {
   onClick?: () => void;
+  overrideHostname?: string;
 };
 
-export default function HostnameDisplay({ onClick }: Props) {
+export default function HostnameDisplay({ onClick, overrideHostname }: Props) {
   const activeTab = useActiveTab();
 
   const [hostname, setHostname] = useState("");
@@ -44,7 +45,7 @@ export default function HostnameDisplay({ onClick }: Props) {
       </Button>
       <Input
         className="h-8 text-center !z-0"
-        value={hostname}
+        value={overrideHostname ?? hostname}
         readOnly
         onClick={onClick}
       />

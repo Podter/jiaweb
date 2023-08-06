@@ -4,17 +4,20 @@ import HostnameDisplay from "./HostnameDisplay.tsx";
 import { useEffect, useState } from "react";
 import UrlInput from "./UrlInput.tsx";
 import { useActiveTab } from "@/contexts/ActiveTabContext.tsx";
-import usePrevious from "@/hooks/usePrevious.ts";
 
 export default function SearchInput() {
   const activeTab = useActiveTab();
 
   const [inputMode, setInputMode] = useState(false);
-  const prevUrl = usePrevious(activeTab?.url);
+  const [overrideHostname, setOverrideHostname] = useState<string | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
-    if (activeTab && activeTab.url !== prevUrl) {
-      setInputMode(false);
+    setInputMode(false);
+
+    if (!activeTab?.isLoading) {
+      setOverrideHostname(undefined);
     }
   }, [activeTab]);
 
@@ -27,9 +30,15 @@ export default function SearchInput() {
         )}
       >
         {inputMode ? (
-          <UrlInput cancel={() => setInputMode(false)} />
+          <UrlInput
+            cancel={() => setInputMode(false)}
+            setOverrideHostname={setOverrideHostname}
+          />
         ) : (
-          <HostnameDisplay onClick={() => setInputMode(true)} />
+          <HostnameDisplay
+            onClick={() => setInputMode(true)}
+            overrideHostname={overrideHostname}
+          />
         )}
       </div>
     </div>
