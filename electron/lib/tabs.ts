@@ -5,6 +5,8 @@ import {
   screen,
 } from "electron";
 import { newTabUrl, titleBarHeight, tabBarHeight } from "../constants.ts";
+import contextMenu from "electron-context-menu";
+import { initWebviewContextMenu } from "./contextMenu.ts";
 
 export interface TabData {
   id: number;
@@ -18,6 +20,7 @@ export interface TabData {
 
 export class Tab {
   private readonly view: BrowserView;
+  private disposeContextMenu: () => void;
   webContents: WebContents;
 
   id: number;
@@ -75,6 +78,9 @@ export class Tab {
     this.webContents.loadURL(this.initialUrl ?? newTabUrl);
     if (initialUrl) this.title = initialUrl;
 
+    this.disposeContextMenu = contextMenu(
+      initWebviewContextMenu(this, this.tabs),
+    );
     this.window.addBrowserView(this.view);
 
     this.webContents
@@ -119,6 +125,7 @@ export class Tab {
 
   destroy() {
     this.hide();
+    this.disposeContextMenu();
     if (!this.window.isDestroyed()) {
       this.window.removeBrowserView(this.view);
     }

@@ -34,6 +34,7 @@
     "clsx": "^2.0.0",
     "electron": "^25.4.0",
     "electron-builder": "^24.6.3",
+    "electron-context-menu": "^3.6.1",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-prettier": "^5.0.0",
