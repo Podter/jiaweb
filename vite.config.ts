@@ -33,6 +33,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         toolbar: path.resolve(__dirname, "./src/toolbar/index.html"),
+        newtab: path.resolve(__dirname, "./src/newtab/index.html"),
       },
     },
   },
