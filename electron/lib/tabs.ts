@@ -31,8 +31,8 @@ export class Tab {
   private readonly handleResize = () => {
     const bounds = this.window.getBounds();
     const mainScreen = screen.getPrimaryDisplay();
-    const tabs = this.getTabs();
-    const height = titleBarHeight + (tabs > 1 ? tabBarHeight : 0);
+    const height =
+      titleBarHeight + (this.tabs.getTabIds().length > 1 ? tabBarHeight : 0);
 
     this.view.setBounds({
       x: 0,
@@ -65,7 +65,7 @@ export class Tab {
 
   constructor(
     private window: BrowserWindow,
-    private readonly getTabs: () => number,
+    private readonly tabs: Tabs,
   ) {
     this.view = new BrowserView();
     this.webContents = this.view.webContents;
@@ -154,7 +154,7 @@ export class Tabs {
   }
 
   createTab() {
-    const tab = new Tab(this.window, () => this.getTabIds().length);
+    const tab = new Tab(this.window, this);
     tab.webContents.loadURL(newTabUrl);
     this.tabs.set(tab.id, tab);
     this.setActiveTab(tab.id);
