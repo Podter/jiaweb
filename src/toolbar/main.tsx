@@ -5,7 +5,7 @@ import { ActiveTabProvider } from "./contexts/ActiveTabContext";
 import TitleBar from "./components/TitleBar";
 import TabBar from "./components/TabBar";
 
-import "@/styles.css";
+import "@/global.css";
 import "@fontsource-variable/inter";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
