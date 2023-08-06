@@ -28,6 +28,7 @@ const Tab = forwardRef<HTMLDivElement, TabProps>(
       return () => {
         unlisten();
       };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (!tab) return null;

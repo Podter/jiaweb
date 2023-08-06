@@ -48,6 +48,7 @@ export default function UrlInput({ cancel, setOverrideHostname }: Props) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function onSubmit({ url }: z.infer<typeof formSchema>) {
