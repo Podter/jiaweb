@@ -1,13 +1,13 @@
 import TitleBarButton from "@/components/TitleBar/TitleBarButton.tsx";
 import {
   StarLineHorizontal316Regular,
-  MoreHorizontal16Regular,
   Dismiss16Regular,
   Maximize16Regular,
   SquareMultiple16Regular,
   Subtract16Regular,
 } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
+import MoreMenu from "./MoreMenu.tsx";
 
 const { appWindow } = window;
 
@@ -31,9 +31,7 @@ export default function Menu() {
       <TitleBarButton>
         <StarLineHorizontal316Regular />
       </TitleBarButton>
-      <TitleBarButton className="mr-1">
-        <MoreHorizontal16Regular />
-      </TitleBarButton>
+      <MoreMenu />
       <TitleBarButton
         className="rounded-none h-12"
         onClick={() => appWindow.minimize()}
