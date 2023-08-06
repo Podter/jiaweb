@@ -30,6 +30,8 @@ async function createWindow() {
   });
   initWindowApi(win);
 
+  win.webContents.toggleDevTools();
+
   tabs = new Tabs(win);
   tabs.createTab();
   initTabsApi(tabs);
