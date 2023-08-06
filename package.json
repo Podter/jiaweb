@@ -35,6 +35,7 @@
     "electron": "^25.4.0",
     "electron-builder": "^24.6.3",
     "electron-context-menu": "^3.6.1",
+    "electron-store": "^8.1.0",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-prettier": "^5.0.0",

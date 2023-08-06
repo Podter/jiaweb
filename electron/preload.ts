@@ -42,6 +42,13 @@ body {
   background-color: hsl(0, 0%, 100%);
   color: hsl(222.2, 84%, 4.9%);
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: hsl(222.2, 84%, 4.9%);
+    color: hsl(210, 40%, 98%);
+  }
+}
   
 .${className} {
   display: flex;

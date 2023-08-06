@@ -5,8 +5,9 @@ import {
   IpcRendererEvent,
   nativeTheme,
 } from "electron";
+import type { StoreType } from "../main.ts";
 
-export function initWindowApi(win: BrowserWindow) {
+export function initWindowApi(win: BrowserWindow, store: StoreType) {
   ipcMain.handle("close", () => win.close());
   ipcMain.handle("minimize", () => win.minimize());
   ipcMain.handle("toggleMaximize", () => {
@@ -22,8 +23,10 @@ export function initWindowApi(win: BrowserWindow) {
   ipcMain.handle("toggleTheme", () => {
     if (nativeTheme.shouldUseDarkColors) {
       nativeTheme.themeSource = "light";
+      store.set("theme", "light");
     } else {
       nativeTheme.themeSource = "dark";
+      store.set("theme", "dark");
     }
     return nativeTheme.shouldUseDarkColors;
   });

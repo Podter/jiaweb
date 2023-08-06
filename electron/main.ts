@@ -1,9 +1,10 @@
-import { app, BrowserWindow, Menu } from "electron";
+import { app, BrowserWindow, Menu, nativeTheme } from "electron";
 import path from "node:path";
 import { initWindowApi } from "./lib/window.ts";
 import { titleBarHeight, tabBarHeight } from "./constants.ts";
 import { Tabs } from "./lib/tabs.ts";
 import { initTabsApi } from "./lib/tabsApi.ts";
+import Store from "electron-store";
 
 process.env.DIST = path.join(__dirname, "../dist");
 process.env.PUBLIC = app.isPackaged
@@ -12,7 +13,16 @@ process.env.PUBLIC = app.isPackaged
 
 let win: BrowserWindow | null;
 let tabs: Tabs | null;
+const store = new Store<{
+  theme: "light" | "dark" | "system";
+}>({
+  defaults: {
+    theme: "system",
+  },
+});
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
+
+export type StoreType = typeof store;
 
 async function createWindow() {
   Menu.setApplicationMenu(null);
@@ -28,7 +38,8 @@ async function createWindow() {
     autoHideMenuBar: true,
     titleBarStyle: "hidden",
   });
-  initWindowApi(win);
+  nativeTheme.themeSource = store.get("theme");
+  initWindowApi(win, store);
 
   win.webContents.toggleDevTools();
 
