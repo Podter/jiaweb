@@ -37,6 +37,17 @@ export default function UrlInput({ cancel, setOverrideHostname }: Props) {
     setValue("url", activeTab?.url ?? "");
     setFocus("url");
     inputRef.current?.select();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        cancel();
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   function onSubmit({ url }: z.infer<typeof formSchema>) {
@@ -56,7 +67,7 @@ export default function UrlInput({ cancel, setOverrideHostname }: Props) {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Input
-        className="h-8 !z-0"
+        className="h-8 !z-0 pr-8"
         placeholder="Search or enter web address"
         {...inputProps}
         ref={(e) => {
