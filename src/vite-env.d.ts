@@ -18,7 +18,7 @@ export interface TabsApi {
   getActiveTabId: () => Promise<number>;
   getTabIds: () => Promise<number[]>;
 
-  createTab: () => Promise<number>;
+  createTab: (initialUrl?: string) => Promise<number>;
   setActiveTab: (id: number) => Promise<void>;
   closeTab: (id: number) => Promise<void>;
 

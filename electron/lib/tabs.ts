@@ -21,7 +21,7 @@ export class Tab {
   webContents: WebContents;
 
   id: number;
-  title: string = "";
+  title: string = "New tab";
   url: string = "";
   favicon: string = "";
   isLoading: boolean = false;
@@ -66,11 +66,13 @@ export class Tab {
   constructor(
     private window: BrowserWindow,
     private readonly tabs: Tabs,
+    private readonly initialUrl?: string,
   ) {
     this.view = new BrowserView();
     this.webContents = this.view.webContents;
     this.id = this.webContents.id;
 
+    this.webContents.loadURL(this.initialUrl ?? newTabUrl);
     this.window.addBrowserView(this.view);
 
     this.webContents
@@ -153,9 +155,8 @@ export class Tabs {
     return Array.from(this.tabs.keys());
   }
 
-  createTab() {
-    const tab = new Tab(this.window, this);
-    tab.webContents.loadURL(newTabUrl);
+  createTab(initialUrl?: string) {
+    const tab = new Tab(this.window, this, initialUrl);
     this.tabs.set(tab.id, tab);
     this.setActiveTab(tab.id);
     this.window.webContents.send("tabListChanged", this.getTabIds());
