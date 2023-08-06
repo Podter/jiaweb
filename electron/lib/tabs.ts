@@ -61,7 +61,6 @@ export class Tab {
     this.canGoForward = this.webContents.canGoForward();
     const tabData = this.getTabData();
     this.window.webContents.send("tabDataChanged", this.id, tabData);
-    console.log(tabData);
   };
 
   constructor(

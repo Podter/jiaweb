@@ -34,8 +34,6 @@ export function ActiveTabProvider({ children }: PropsWithChildren) {
       setTab(data);
     });
 
-    console.log("asd");
-
     return () => {
       unlistenOnTabSwitched();
       unlistenOnTabDataChanged();
