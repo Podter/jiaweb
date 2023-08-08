@@ -6,7 +6,7 @@ import {
 } from "electron";
 import { titleBarHeight, tabBarHeight } from "../constants.ts";
 import contextMenu from "electron-context-menu";
-import { initWebviewContextMenu } from "../menu/contextMenu.ts";
+import { initRightClickMenu } from "../menu/rightClickMenu.ts";
 import { VITE_DEV_SERVER_URL } from "../main.ts";
 import path from "node:path";
 
@@ -90,9 +90,7 @@ export class Tab {
       }
     }
 
-    this.disposeContextMenu = contextMenu(
-      initWebviewContextMenu(this, this.tabs),
-    );
+    this.disposeContextMenu = contextMenu(initRightClickMenu(this, this.tabs));
     this.window.addBrowserView(this.view);
 
     this.webContents

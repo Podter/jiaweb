@@ -1,7 +1,7 @@
 import type { Options } from "electron-context-menu";
 import type { Tab, Tabs } from "../lib/tabs.ts";
 
-export function initWebviewContextMenu(tab: Tab, tabs: Tabs): Options {
+export function initRightClickMenu(tab: Tab, tabs: Tabs): Options {
   return {
     window: tab.webContents,
     showSearchWithGoogle: false,

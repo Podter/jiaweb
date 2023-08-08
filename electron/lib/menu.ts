@@ -12,6 +12,6 @@ export function initMenuApi(win: BrowserWindow, tabs: Tabs, store: StoreType) {
   });
 }
 
-export const menuApi = {
+export const menu = {
   moreMenu: () => ipcRenderer.invoke("moreMenu"),
 };

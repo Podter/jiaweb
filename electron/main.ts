@@ -5,7 +5,7 @@ import { titleBarHeight, tabBarHeight } from "./constants.ts";
 import { Tabs } from "./lib/tabs.ts";
 import { initTabsApi } from "./lib/tabsApi.ts";
 import Store from "electron-store";
-import { initMenuApi } from "./lib/menuApi.ts";
+import { initMenuApi } from "./lib/menu.ts";
 
 process.env.DIST = path.join(__dirname, "../dist");
 process.env.PUBLIC = app.isPackaged
