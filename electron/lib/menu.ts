@@ -8,7 +8,6 @@ export function initMenuApi(win: BrowserWindow, tabs: Tabs, store: StoreType) {
 
   ipcMain.handle("moreMenu", () => {
     moreMenu.popup({ window: win });
-    return;
   });
 }
 
