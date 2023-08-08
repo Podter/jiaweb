@@ -10,8 +10,6 @@ export interface AppWindowApi {
 
   isMaximized: () => Promise<boolean>;
 
-  toggleTheme: () => Promise<boolean>;
-
   onToggleMaximize: (
     callback: (e: IpcRendererEvent, isMaximized: boolean) => void,
   ) => () => void;

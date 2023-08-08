@@ -40,7 +40,7 @@ async function createWindow() {
     titleBarStyle: "hidden",
   });
   nativeTheme.themeSource = store.get("theme");
-  initWindowApi(win, store);
+  initWindowApi(win);
 
   // win.webContents.toggleDevTools();
 
@@ -48,7 +48,7 @@ async function createWindow() {
   tabs.createTab();
   initTabsApi(tabs);
 
-  initMenuApi(win, tabs);
+  initMenuApi(win, tabs, store);
 
   if (VITE_DEV_SERVER_URL) {
     await win.loadURL(VITE_DEV_SERVER_URL + "src/toolbar/index.html");

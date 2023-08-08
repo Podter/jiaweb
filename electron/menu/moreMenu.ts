@@ -1,7 +1,9 @@
-import { Menu } from "electron";
+import { Menu, nativeTheme } from "electron";
 import type { Tabs } from "../lib/tabs.ts";
+import { githubUrl } from "../constants.ts";
+import type { StoreType } from "../main.ts";
 
-export function initMoreMenu(tabs: Tabs) {
+export function initMoreMenu(tabs: Tabs, store: StoreType) {
   return Menu.buildFromTemplate([
     {
       id: "newTab",
@@ -10,8 +12,20 @@ export function initMoreMenu(tabs: Tabs) {
       click: () => tabs.createTab(),
     },
     {
+      type: "separator",
+    },
+    {
       id: "toogleTheme",
       label: "Toogle Theme",
+      click: () => {
+        if (nativeTheme.shouldUseDarkColors) {
+          nativeTheme.themeSource = "light";
+          store.set("theme", "light");
+        } else {
+          nativeTheme.themeSource = "dark";
+          store.set("theme", "dark");
+        }
+      },
     },
     {
       type: "separator",
@@ -19,7 +33,7 @@ export function initMoreMenu(tabs: Tabs) {
     {
       id: "github",
       label: "Open GitHub",
-      click: () => tabs.createTab("https://github.com/Podter/jiaweb"),
+      click: () => tabs.createTab(githubUrl),
     },
     {
       id: "about",
