@@ -12,8 +12,8 @@ import path from "node:path";
 
 export interface TabData {
   id: number;
-  title: string;
-  url: string;
+  title?: string;
+  url?: string;
   favicon?: string;
   isLoading: boolean;
   canGoBack: boolean;
@@ -26,8 +26,8 @@ export class Tab {
   webContents: WebContents;
 
   id: number;
-  title: string = "New tab";
-  url: string = "";
+  title?: string;
+  url?: string;
   favicon?: string;
   isLoading: boolean = false;
   canGoBack: boolean = false;
@@ -78,7 +78,7 @@ export class Tab {
     this.id = this.webContents.id;
 
     if (this.initialUrl) {
-      this.title = this.initialUrl;
+      this.url = this.initialUrl;
       this.webContents.loadURL(this.initialUrl);
     } else {
       if (VITE_DEV_SERVER_URL) {

@@ -50,11 +50,15 @@ const Tab = forwardRef<HTMLDivElement, TabProps>(
           {tab.isLoading ? (
             <Icon icon={icon90RingWithBg} fontSize={12} className="mr-2" />
           ) : tab.favicon ? (
-            <img className="h-3 w-3 mr-2" src={tab.favicon} alt={tab.title} />
+            <img
+              className="h-3 w-3 mr-2"
+              src={tab.favicon}
+              alt={tab.title ?? tab.url ?? "Loading"}
+            />
           ) : (
             <DocumentRegular scale={12} className="mr-2" />
           )}
-          {tab.title}
+          {tab.title ?? tab.url ?? "Loading"}
         </button>
         <Button
           variant="ghost"

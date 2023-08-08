@@ -27,7 +27,7 @@ export default function HostnameDisplay({ onClick, overrideHostname }: Props) {
 
   useEffect(() => {
     try {
-      if (!activeTab) {
+      if (!activeTab || !activeTab.url) {
         setHostname("");
         return;
       }
