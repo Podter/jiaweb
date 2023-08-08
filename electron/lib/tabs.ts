@@ -60,7 +60,7 @@ export class Tab {
     }
   };
 
-  private readonly fireDataChanged = () => {
+  private readonly onDataChanged = () => {
     this.url = this.webContents.getURL();
     this.canGoBack = this.webContents.canGoBack();
     this.canGoForward = this.webContents.canGoForward();
@@ -96,17 +96,17 @@ export class Tab {
     this.webContents
       .on("did-start-loading", () => {
         this.isLoading = true;
-        this.fireDataChanged();
+        this.onDataChanged();
       })
-      .on("did-start-navigation", () => this.fireDataChanged())
-      .on("will-redirect", () => this.fireDataChanged())
+      .on("did-start-navigation", () => this.onDataChanged())
+      .on("will-redirect", () => this.onDataChanged())
       .on("page-title-updated", (_, title) => {
         if (title !== "") {
           this.title = title;
         } else {
           this.title = undefined;
         }
-        this.fireDataChanged();
+        this.onDataChanged();
       })
       .on("page-favicon-updated", (_, favicons) => {
         const favicon = favicons[0];
@@ -115,11 +115,11 @@ export class Tab {
         } else {
           this.favicon = undefined;
         }
-        this.fireDataChanged();
+        this.onDataChanged();
       })
       .on("did-stop-loading", () => {
         this.isLoading = false;
-        this.fireDataChanged();
+        this.onDataChanged();
       })
       .on("dom-ready", () => this.webContents.focus())
       .setWindowOpenHandler(({ url, disposition }) => {
