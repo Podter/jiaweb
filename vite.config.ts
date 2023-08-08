@@ -21,6 +21,13 @@ export default defineConfig({
           options.reload();
         },
       },
+      {
+        entry: "electron/preload/newTab.ts",
+        onstart(options) {
+          // Preload-Script for the New Tab page.
+          options.reload();
+        },
+      },
     ]),
     renderer(),
   ],

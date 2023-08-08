@@ -81,7 +81,13 @@ export class Tab {
     private readonly tabs: Tabs,
     private readonly initialUrl?: string,
   ) {
-    this.view = new BrowserView();
+    this.view = new BrowserView({
+      webPreferences: {
+        preload: !this.initialUrl
+          ? path.join(__dirname, "newTab.js")
+          : undefined,
+      },
+    });
     this.webContents = this.view.webContents;
     this.id = this.webContents.id;
 
