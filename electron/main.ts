@@ -2,7 +2,7 @@ import { app, BrowserWindow, Menu, nativeTheme } from "electron";
 import path from "node:path";
 import { initWindowApi } from "./lib/window.ts";
 import { titleBarHeight, tabBarHeight } from "./constants.ts";
-import { Tabs } from "./lib/tabs.ts";
+import { Tabs, type Favorite } from "./lib/tabs.ts";
 import { initTabsApi } from "./lib/tabsApi.ts";
 import Store from "electron-store";
 import { initMenuApi } from "./lib/menu.ts";
@@ -16,9 +16,11 @@ let win: BrowserWindow | null;
 let tabs: Tabs | null;
 const store = new Store<{
   theme: "light" | "dark" | "system";
+  favorites: Favorite[];
 }>({
   defaults: {
     theme: "system",
+    favorites: [],
   },
 });
 export const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
@@ -44,7 +46,7 @@ async function createWindow() {
 
   // win.webContents.toggleDevTools();
 
-  tabs = new Tabs(win);
+  tabs = new Tabs(win, store);
   tabs.createTab();
   initTabsApi(tabs);
 

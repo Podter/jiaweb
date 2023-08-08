@@ -30,6 +30,9 @@ export interface TabsApi {
   stop: (id: number) => Promise<void>;
   setUrl: (id: number, url: string) => Promise<void>;
 
+  addFavorite: (id: number) => Promise<void>;
+  removeFavorite: (id: number) => Promise<void>;
+
   onTabListChanged: (
     callback: (e: IpcRendererEvent, tabIds: number[]) => void,
   ) => () => void;

@@ -7,7 +7,7 @@ import {
 import { titleBarHeight, tabBarHeight } from "../constants.ts";
 import contextMenu from "electron-context-menu";
 import { initRightClickMenu } from "../menu/rightClickMenu.ts";
-import { VITE_DEV_SERVER_URL } from "../main.ts";
+import { VITE_DEV_SERVER_URL, StoreType } from "../main.ts";
 import path from "node:path";
 
 export interface TabData {
@@ -15,9 +15,16 @@ export interface TabData {
   title?: string;
   url?: string;
   favicon?: string;
+  favorite: boolean;
   isLoading: boolean;
   canGoBack: boolean;
   canGoForward: boolean;
+}
+
+export interface Favorite {
+  url: string;
+  title?: string;
+  favicon?: string;
 }
 
 export class Tab {
@@ -29,6 +36,7 @@ export class Tab {
   title?: string;
   url?: string;
   favicon?: string;
+  favorite: boolean = false;
   isLoading: boolean = false;
   canGoBack: boolean = false;
   canGoForward: boolean = false;
@@ -136,6 +144,7 @@ export class Tab {
       title: this.title,
       url: this.url,
       favicon: this.favicon,
+      favorite: this.favorite,
       isLoading: this.isLoading,
       canGoBack: this.canGoBack,
       canGoForward: this.canGoForward,
@@ -172,7 +181,10 @@ export class Tabs {
   private tabs: Map<number, Tab>;
   private activeTabId: number;
 
-  constructor(private window: BrowserWindow) {
+  constructor(
+    private window: BrowserWindow,
+    private store: StoreType,
+  ) {
     this.tabs = new Map();
     this.activeTabId = -1;
   }
@@ -251,6 +263,39 @@ export class Tabs {
     const tab = this.getTab(id);
     if (tab) {
       tab.webContents.loadURL(url);
+    }
+  }
+
+  addFavorite(id: number) {
+    const tab = this.getTab(id);
+    if (tab && tab.url) {
+      const favorites = this.store.get("favorites");
+      const newFavorites: Favorite[] = [
+        ...favorites,
+        {
+          url: tab.url,
+          title: tab.title,
+          favicon: tab.favicon,
+        },
+      ];
+      this.store.set("favorites", newFavorites);
+      tab.favorite = true;
+
+      this.window.webContents.send("tabDataChanged", tab.id, tab.getTabData());
+    }
+  }
+
+  removeFavorite(id: number) {
+    const tab = this.getTab(id);
+    if (tab && tab.url) {
+      const favorites = this.store.get("favorites");
+      const newFavorites = favorites.filter(
+        (favorite) => favorite.url !== tab.url,
+      );
+      this.store.set("favorites", newFavorites);
+      tab.favorite = false;
+
+      this.window.webContents.send("tabDataChanged", tab.id, tab.getTabData());
     }
   }
 

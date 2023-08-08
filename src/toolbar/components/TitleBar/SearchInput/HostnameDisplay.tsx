@@ -5,6 +5,7 @@ import {
   LockClosed12Regular,
   LockOpen12Regular,
   Star12Regular,
+  Star12Filled,
 } from "@fluentui/react-icons";
 import { Input } from "@/components/ui/input.tsx";
 import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
@@ -62,8 +63,20 @@ export default function HostnameDisplay({ onClick, overrideHostname }: Props) {
         onClick={onClick}
       />
       <div className="absolute right-1 z-50 flex justify-end items-center">
-        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 z-50">
-          <Star12Regular />
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-6 w-6 p-0 z-50"
+          onClick={() => {
+            if (!activeTab) return;
+            if (activeTab.favorite) {
+              tabs.removeFavorite(activeTab.id);
+            } else {
+              tabs.addFavorite(activeTab.id);
+            }
+          }}
+        >
+          {activeTab?.favorite ? <Star12Filled /> : <Star12Regular />}
         </Button>
         <Button
           variant="ghost"
