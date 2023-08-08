@@ -1,5 +1,5 @@
 import type { Options } from "electron-context-menu";
-import type { Tab, Tabs } from "./tabs.ts";
+import type { Tab, Tabs } from "../lib/tabs.ts";
 
 export function initWebviewContextMenu(tab: Tab, tabs: Tabs): Options {
   return {

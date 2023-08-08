@@ -6,7 +6,7 @@ import {
 } from "electron";
 import { titleBarHeight, tabBarHeight } from "../constants.ts";
 import contextMenu from "electron-context-menu";
-import { initWebviewContextMenu } from "./contextMenu.ts";
+import { initWebviewContextMenu } from "../menu/contextMenu.ts";
 import { VITE_DEV_SERVER_URL } from "../main.ts";
 import path from "node:path";
 
