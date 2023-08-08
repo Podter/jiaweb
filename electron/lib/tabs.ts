@@ -14,7 +14,7 @@ export interface TabData {
   id: number;
   title: string;
   url: string;
-  favicon: string;
+  favicon?: string;
   isLoading: boolean;
   canGoBack: boolean;
   canGoForward: boolean;
@@ -22,13 +22,13 @@ export interface TabData {
 
 export class Tab {
   private readonly view: BrowserView;
-  private disposeContextMenu: () => void;
+  private readonly disposeContextMenu: () => void;
   webContents: WebContents;
 
   id: number;
   title: string = "New tab";
   url: string = "";
-  favicon: string = "";
+  favicon?: string;
   isLoading: boolean = false;
   canGoBack: boolean = false;
   canGoForward: boolean = false;
