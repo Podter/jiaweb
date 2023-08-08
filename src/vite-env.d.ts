@@ -43,9 +43,14 @@ export interface TabsApi {
   ) => () => void;
 }
 
+export interface MenuApi {
+  moreMenu: () => Promise<void>;
+}
+
 declare global {
   interface Window {
     appWindow: AppWindowApi;
     tabs: TabsApi;
+    menu: MenuApi;
   }
 }

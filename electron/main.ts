@@ -5,6 +5,7 @@ import { titleBarHeight, tabBarHeight } from "./constants.ts";
 import { Tabs } from "./lib/tabs.ts";
 import { initTabsApi } from "./lib/tabsApi.ts";
 import Store from "electron-store";
+import { initMenuApi } from "./lib/menuApi.ts";
 
 process.env.DIST = path.join(__dirname, "../dist");
 process.env.PUBLIC = app.isPackaged
@@ -46,6 +47,8 @@ async function createWindow() {
   tabs = new Tabs(win);
   tabs.createTab();
   initTabsApi(tabs);
+
+  initMenuApi(win, tabs);
 
   if (VITE_DEV_SERVER_URL) {
     await win.loadURL(VITE_DEV_SERVER_URL + "src/toolbar/index.html");
