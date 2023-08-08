@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import MoreMenu from "./MoreMenu.tsx";
 
-const { appWindow } = window;
+const { appWindow, menu } = window;
 
 export default function Menu() {
   const [maximized, setMaximized] = useState(false);
@@ -28,7 +28,7 @@ export default function Menu() {
 
   return (
     <div className="flex justify-end items-center z-50">
-      <TitleBarButton>
+      <TitleBarButton onClick={() => menu.favoritesMenu()}>
         <StarLineHorizontal316Regular />
       </TitleBarButton>
       <MoreMenu />

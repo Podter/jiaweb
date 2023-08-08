@@ -46,6 +46,7 @@ export interface TabsApi {
 
 export interface MenuApi {
   moreMenu: () => Promise<void>;
+  favoritesMenu: () => Promise<void>;
 }
 
 declare global {
