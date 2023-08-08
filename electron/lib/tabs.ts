@@ -101,11 +101,20 @@ export class Tab {
       .on("did-start-navigation", () => this.fireDataChanged())
       .on("will-redirect", () => this.fireDataChanged())
       .on("page-title-updated", (_, title) => {
-        this.title = title;
+        if (title !== "") {
+          this.title = title;
+        } else {
+          this.title = undefined;
+        }
         this.fireDataChanged();
       })
       .on("page-favicon-updated", (_, favicons) => {
-        this.favicon = favicons[0];
+        const favicon = favicons[0];
+        if (favicon !== "" && favicon !== undefined) {
+          this.favicon = favicons[0];
+        } else {
+          this.favicon = undefined;
+        }
         this.fireDataChanged();
       })
       .on("did-stop-loading", () => {

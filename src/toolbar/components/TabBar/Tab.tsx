@@ -16,6 +16,7 @@ const { tabs } = window;
 const Tab = forwardRef<HTMLDivElement, TabProps>(
   ({ tabId, selected, className, ...props }, ref) => {
     const [tab, setTab] = useState<TabData | null>(null);
+    const [noFavicon, setNoFavicon] = useState(true);
 
     useEffect(() => {
       tabs.getTab(tabId).then((tab) => setTab(tab));
@@ -30,6 +31,12 @@ const Tab = forwardRef<HTMLDivElement, TabProps>(
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+      if (tab?.favicon) {
+        setNoFavicon(false);
+      }
+    }, [tab?.favicon]);
 
     if (!tab) return null;
 
@@ -49,11 +56,12 @@ const Tab = forwardRef<HTMLDivElement, TabProps>(
         >
           {tab.isLoading ? (
             <Icon icon={icon90RingWithBg} fontSize={12} className="mr-2" />
-          ) : tab.favicon ? (
+          ) : tab.favicon && !noFavicon ? (
             <img
               className="h-3 w-3 mr-2"
               src={tab.favicon}
               alt={tab.title ?? tab.url ?? "Loading"}
+              onError={() => setNoFavicon(true)}
             />
           ) : (
             <DocumentRegular scale={12} className="mr-2" />
