@@ -16,5 +16,3 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     </ActiveTabProvider>
   </React.StrictMode>,
 );
-
-postMessage({ payload: "removeLoading" }, "*");
