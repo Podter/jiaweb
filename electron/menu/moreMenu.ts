@@ -49,8 +49,3 @@ export function createMoreMenu(tabs: Tabs, store: StoreType) {
     },
   ]);
 }
-
-/**
- * @deprecated Use createMoreMenu instead.
- */
-export const initMoreMenu = createMoreMenu;

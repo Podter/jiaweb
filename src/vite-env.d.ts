@@ -44,11 +44,6 @@ export interface TabsApi {
   ) => () => void;
 }
 
-export interface MenuApi {
-  moreMenu: () => Promise<void>;
-  favoritesMenu: () => Promise<void>;
-}
-
 export interface NewTabApi {
   search: (query: string) => Promise<void>;
 }
@@ -57,7 +52,6 @@ declare global {
   interface Window {
     appWindow: AppWindowApi;
     tabs: TabsApi;
-    menu: MenuApi;
     newTab: NewTabApi;
   }
 }
