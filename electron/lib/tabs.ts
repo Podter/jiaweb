@@ -88,7 +88,7 @@ export class Tab {
     this.view = new BrowserView({
       webPreferences: {
         preload: !this.initialUrl
-          ? path.join(__dirname, "newTab.js")
+          ? path.join(__dirname, "preload.js")
           : undefined,
       },
     });
