@@ -50,7 +50,7 @@ async function createWindow() {
   nativeTheme.themeSource = store.get("theme");
   initWindowApi(win);
 
-  win.webContents.toggleDevTools();
+  // win.webContents.toggleDevTools();
 
   tabs = new Tabs(win, store);
   tabs.createTab();
