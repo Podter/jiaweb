@@ -12,6 +12,7 @@ import Store from "electron-store";
 import { initMenuApi } from "./lib/menu.ts";
 import { initNewTabApi } from "./lib/newTabApi.ts";
 import { createIPCHandler } from "electron-trpc/main";
+import { createTRPCContext } from "./trpc/trpc.ts";
 import { appRouter } from "./trpc/root.ts";
 
 process.env.DIST = path.join(__dirname, "../dist");
@@ -59,7 +60,11 @@ async function createWindow() {
   initMenuApi(win, tabs, store);
   initNewTabApi(tabs);
 
-  createIPCHandler({ router: appRouter, windows: [win] });
+  createIPCHandler({
+    router: appRouter,
+    windows: [win],
+    createContext: async () => createTRPCContext(win!, tabs!, store),
+  });
 
   if (VITE_DEV_SERVER_URL) {
     await win.loadURL(VITE_DEV_SERVER_URL + "src/toolbar/index.html");
