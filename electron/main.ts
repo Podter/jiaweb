@@ -7,6 +7,8 @@ import { initTabsApi } from "./lib/tabsApi.ts";
 import Store from "electron-store";
 import { initMenuApi } from "./lib/menu.ts";
 import { initNewTabApi } from "./lib/newTabApi.ts";
+import { createIPCHandler } from "electron-trpc/main";
+import { appRouter } from "./lib/trpc.ts";
 
 process.env.DIST = path.join(__dirname, "../dist");
 process.env.PUBLIC = app.isPackaged
@@ -45,7 +47,7 @@ async function createWindow() {
   nativeTheme.themeSource = store.get("theme");
   initWindowApi(win);
 
-  // win.webContents.toggleDevTools();
+  win.webContents.toggleDevTools();
 
   tabs = new Tabs(win, store);
   tabs.createTab();
@@ -53,6 +55,8 @@ async function createWindow() {
 
   initMenuApi(win, tabs, store);
   initNewTabApi(tabs);
+
+  createIPCHandler({ router: appRouter, windows: [win] });
 
   if (VITE_DEV_SERVER_URL) {
     await win.loadURL(VITE_DEV_SERVER_URL + "src/toolbar/index.html");

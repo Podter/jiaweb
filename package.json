@@ -13,6 +13,11 @@
     "ui": "shadcn-ui"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.33.0",
+    "@trpc/client": "^10.38.1",
+    "@trpc/react-query": "^10.38.1",
+    "@trpc/server": "^10.38.1",
+    "electron-trpc": "^0.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -53,7 +58,7 @@
     "vite": "^4.4.8",
     "vite-plugin-electron": "^0.12.0",
     "vite-plugin-electron-renderer": "^0.14.5",
-    "zod": "^3.21.4"
+    "zod": "^3.22.2"
   },
   "main": "dist-electron/main.js"
 }

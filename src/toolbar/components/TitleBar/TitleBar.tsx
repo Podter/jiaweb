@@ -4,7 +4,13 @@ import Controls from "./Controls.tsx";
 import SearchInput from "./SearchInput";
 import Menu from "./Menu.tsx";
 
+import { trpc } from "@/lib/trpc.tsx";
+
 export default function TitleBar() {
+  const { data } = trpc.test.hello.useQuery("world");
+
+  console.log(data);
+
   return (
     <div
       className={cn(
