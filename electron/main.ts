@@ -12,7 +12,7 @@ import Store from "electron-store";
 import { initMenuApi } from "./lib/menu.ts";
 import { initNewTabApi } from "./lib/newTabApi.ts";
 import { createIPCHandler } from "electron-trpc/main";
-import { appRouter } from "./lib/trpc.ts";
+import { appRouter } from "./trpc/root.ts";
 
 process.env.DIST = path.join(__dirname, "../dist");
 process.env.PUBLIC = app.isPackaged
