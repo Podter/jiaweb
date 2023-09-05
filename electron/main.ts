@@ -1,7 +1,11 @@
 import { app, BrowserWindow, Menu, nativeTheme } from "electron";
 import path from "node:path";
 import { initWindowApi } from "./lib/window.ts";
-import { titleBarHeight, tabBarHeight } from "./constants.ts";
+import {
+  VITE_DEV_SERVER_URL,
+  titleBarHeight,
+  tabBarHeight,
+} from "./constants.ts";
 import { Tabs, type Favorite } from "./lib/tabs.ts";
 import { initTabsApi } from "./lib/tabsApi.ts";
 import Store from "electron-store";
@@ -26,7 +30,6 @@ const store = new Store<{
     favorites: [],
   },
 });
-export const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
 export type StoreType = typeof store;
 

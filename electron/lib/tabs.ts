@@ -4,10 +4,14 @@ import {
   type WebContents,
   screen,
 } from "electron";
-import { titleBarHeight, tabBarHeight } from "../constants.ts";
+import {
+  VITE_DEV_SERVER_URL,
+  titleBarHeight,
+  tabBarHeight,
+} from "../constants.ts";
 import contextMenu from "electron-context-menu";
 import { initRightClickMenu } from "../menu/rightClickMenu.ts";
-import { VITE_DEV_SERVER_URL, StoreType } from "../main.ts";
+import type { StoreType } from "../main.ts";
 import path from "node:path";
 
 export interface TabData {
