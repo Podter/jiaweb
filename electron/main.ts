@@ -9,7 +9,6 @@ import {
 import { Tabs, type Favorite } from "./lib/tabs.ts";
 import { initTabsApi } from "./lib/tabsApi.ts";
 import Store from "electron-store";
-import { initNewTabApi } from "./lib/newTabApi.ts";
 import { createIPCHandler } from "electron-trpc/main";
 import { createTRPCContext } from "./trpc/trpc.ts";
 import { appRouter } from "./trpc/root.ts";
@@ -55,8 +54,6 @@ async function createWindow() {
   tabs = new Tabs(win, store);
   tabs.createTab();
   initTabsApi(tabs);
-
-  initNewTabApi(tabs);
 
   createIPCHandler({
     router: appRouter,

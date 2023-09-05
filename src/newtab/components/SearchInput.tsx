@@ -4,33 +4,34 @@ import { Button } from "@/components/ui/button.tsx";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
-const { newTab } = window;
+import { trpc } from "@/lib/trpc.tsx";
 
 const formSchema = z.object({
-  search: z.string().min(1),
+  query: z.string().min(1),
 });
 
 export default function SearchInput() {
+  const { mutate: search } = trpc.newTab.search.useMutation();
+
   const { handleSubmit, register } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      search: "",
+      query: "",
     },
   });
 
   return (
     <form
       className="flex justify-center items-center relative w-[40vw]"
-      onSubmit={handleSubmit(
-        async ({ search }) => await newTab.search(encodeURIComponent(search)),
+      onSubmit={handleSubmit(async ({ query }) =>
+        search(encodeURIComponent(query)),
       )}
     >
       <Input
         placeholder="Search with DuckDuckGo"
         className="pr-10"
         autoFocus
-        {...register("search")}
+        {...register("query")}
       />
       <Button
         variant="ghost"
