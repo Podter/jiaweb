@@ -3,7 +3,7 @@ import type { Tabs } from "../lib/tabs.ts";
 import { githubUrl } from "../constants.ts";
 import type { StoreType } from "../main.ts";
 
-export function initMoreMenu(tabs: Tabs, store: StoreType) {
+export function createMoreMenu(tabs: Tabs, store: StoreType) {
   return Menu.buildFromTemplate([
     {
       id: "newTab",
@@ -49,3 +49,8 @@ export function initMoreMenu(tabs: Tabs, store: StoreType) {
     },
   ]);
 }
+
+/**
+ * @deprecated Use createMoreMenu instead.
+ */
+export const initMoreMenu = createMoreMenu;
