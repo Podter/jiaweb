@@ -8,11 +8,15 @@ import {
   MoreHorizontal16Regular,
 } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
+import { trpc } from "@/lib/trpc.tsx";
 
-const { appWindow, menu } = window;
+const { appWindow } = window;
 
 export default function Menu() {
   const [maximized, setMaximized] = useState(false);
+
+  const { mutate: moreMenu } = trpc.menu.moreMenu.useMutation();
+  const { mutate: favoritesMenu } = trpc.menu.favoritesMenu.useMutation();
 
   useEffect(() => {
     appWindow.isMaximized().then((maximized) => setMaximized(maximized));
@@ -28,10 +32,10 @@ export default function Menu() {
 
   return (
     <div className="flex justify-end items-center z-50">
-      <TitleBarButton onClick={() => menu.favoritesMenu()}>
+      <TitleBarButton onClick={() => favoritesMenu()}>
         <StarLineHorizontal316Regular />
       </TitleBarButton>
-      <TitleBarButton className="mr-1" onClick={() => menu.moreMenu()}>
+      <TitleBarButton className="mr-1" onClick={() => moreMenu()}>
         <MoreHorizontal16Regular />
       </TitleBarButton>
       <TitleBarButton
