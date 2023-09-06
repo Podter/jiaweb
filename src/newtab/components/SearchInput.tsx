@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Search16Regular } from "@fluentui/react-icons";
 import { Button } from "@/components/ui/button.tsx";
-import * as z from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { trpc } from "@/lib/trpc.tsx";
