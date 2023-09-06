@@ -14,17 +14,20 @@ import { initRightClickMenu } from "../menu/rightClickMenu.ts";
 import type { StoreType } from "../main.ts";
 import path from "node:path";
 import { ee } from "../trpc/trpc.ts";
+import { z } from "zod";
 
-export interface TabData {
-  id: number;
-  title?: string;
-  url?: string;
-  favicon?: string;
-  favorite: boolean;
-  isLoading: boolean;
-  canGoBack: boolean;
-  canGoForward: boolean;
-}
+export const TabDataSchema = z.object({
+  id: z.number(),
+  title: z.string().optional(),
+  url: z.string().optional(),
+  favicon: z.string().optional(),
+  favorite: z.boolean(),
+  isLoading: z.boolean(),
+  canGoBack: z.boolean(),
+  canGoForward: z.boolean(),
+});
+
+export type TabData = z.infer<typeof TabDataSchema>;
 
 export interface Favorite {
   url: string;
