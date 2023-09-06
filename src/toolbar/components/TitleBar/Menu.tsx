@@ -18,6 +18,10 @@ export default function Menu() {
   const { mutate: moreMenu } = trpc.menu.moreMenu.useMutation();
   const { mutate: favoritesMenu } = trpc.menu.favoritesMenu.useMutation();
 
+  const { mutate: close } = trpc.window.close.useMutation();
+  const { mutate: toggleMaximize } = trpc.window.toggleMaximize.useMutation();
+  const { mutate: minimize } = trpc.window.minimize.useMutation();
+
   useEffect(() => {
     appWindow.isMaximized().then((maximized) => setMaximized(maximized));
 
@@ -38,21 +42,18 @@ export default function Menu() {
       <TitleBarButton className="mr-1" onClick={() => moreMenu()}>
         <MoreHorizontal16Regular />
       </TitleBarButton>
-      <TitleBarButton
-        className="rounded-none h-12"
-        onClick={() => appWindow.minimize()}
-      >
+      <TitleBarButton className="rounded-none h-12" onClick={() => minimize()}>
         <Subtract16Regular />
       </TitleBarButton>
       <TitleBarButton
         className="rounded-none h-12"
-        onClick={() => appWindow.toggleMaximize()}
+        onClick={() => toggleMaximize()}
       >
         {maximized ? <SquareMultiple16Regular /> : <Maximize16Regular />}
       </TitleBarButton>
       <TitleBarButton
         className="hover:text-destructive-foreground hover:bg-destructive/90 rounded-none h-12"
-        onClick={() => appWindow.close()}
+        onClick={() => close()}
       >
         <Dismiss16Regular />
       </TitleBarButton>

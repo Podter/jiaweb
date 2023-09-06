@@ -4,10 +4,6 @@ import type { IpcRendererEvent } from "electron";
 import type { TabData } from "../electron/lib/tabs.ts";
 
 export interface AppWindowApi {
-  close: () => Promise<void>;
-  minimize: () => Promise<void>;
-  toggleMaximize: () => Promise<void>;
-
   isMaximized: () => Promise<boolean>;
 
   onToggleMaximize: (
