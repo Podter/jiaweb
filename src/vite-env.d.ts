@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 
-import type { IpcRendererEvent } from "electron";
 import type { TabData } from "../electron/lib/tabs.ts";
 
 export interface TabsApi {
@@ -20,16 +19,6 @@ export interface TabsApi {
 
   addFavorite: (id: number) => Promise<void>;
   removeFavorite: (id: number) => Promise<void>;
-
-  onTabListChanged: (
-    callback: (e: IpcRendererEvent, tabIds: number[]) => void,
-  ) => () => void;
-  onTabSwitched: (
-    callback: (e: IpcRendererEvent, id: number) => void,
-  ) => () => void;
-  onTabDataChanged: (
-    callback: (e: IpcRendererEvent, id: number, data: TabData) => void,
-  ) => () => void;
 }
 
 declare global {

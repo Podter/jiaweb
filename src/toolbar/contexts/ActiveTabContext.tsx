@@ -6,6 +6,7 @@ import {
   useEffect,
 } from "react";
 import type { TabData } from "../../../electron/lib/tabs.ts";
+import { trpc } from "@/lib/trpc.tsx";
 
 const { tabs } = window;
 
@@ -14,30 +15,28 @@ const ActiveTabContext = createContext<TabData | null>(null);
 export const useActiveTab = () => useContext(ActiveTabContext);
 
 export function ActiveTabProvider({ children }: PropsWithChildren) {
+  const [tabId, setTabId] = useState(-1);
   const [tab, setTab] = useState<TabData | null>(null);
 
-  useEffect(() => {
-    let tabId = -1;
-
-    tabs.getActiveTabId().then((id) => {
-      tabId = id;
+  trpc.tab.onTabSwitched.useSubscription(undefined, {
+    onData(id) {
+      setTabId(id);
       tabs.getTab(id).then(setTab);
-    });
+    },
+  });
 
-    const unlistenOnTabSwitched = tabs.onTabSwitched((_, id) => {
-      tabId = id;
-      tabs.getTab(id).then(setTab);
-    });
-
-    const unlistenOnTabDataChanged = tabs.onTabDataChanged((_, id, data) => {
+  trpc.tab.onTabDataChanged.useSubscription(undefined, {
+    onData({ id, data }) {
       if (tabId !== id) return;
       setTab(data);
-    });
+    },
+  });
 
-    return () => {
-      unlistenOnTabSwitched();
-      unlistenOnTabDataChanged();
-    };
+  useEffect(() => {
+    tabs.getActiveTabId().then((id) => {
+      setTabId(id);
+      tabs.getTab(id).then(setTab);
+    });
   }, []);
 
   return (

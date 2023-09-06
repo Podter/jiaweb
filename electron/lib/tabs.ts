@@ -13,6 +13,7 @@ import contextMenu from "electron-context-menu";
 import { initRightClickMenu } from "../menu/rightClickMenu.ts";
 import type { StoreType } from "../main.ts";
 import path from "node:path";
+import { ee } from "../trpc/trpc.ts";
 
 export interface TabData {
   id: number;
@@ -77,7 +78,7 @@ export class Tab {
     this.canGoBack = this.webContents.canGoBack();
     this.canGoForward = this.webContents.canGoForward();
     const tabData = this.getTabData();
-    this.window.webContents.send("tabDataChanged", this.id, tabData);
+    ee.emit("tabDataChanged", this.id, tabData);
   };
 
   constructor(
@@ -215,7 +216,7 @@ export class Tabs {
     const tab = new Tab(this.window, this, initialUrl);
     this.tabs.set(tab.id, tab);
     this.setActiveTab(tab.id);
-    this.window.webContents.send("tabListChanged", this.getTabIds());
+    ee.emit("tabListChanged", this.getTabIds());
     return tab.id;
   }
 
@@ -224,7 +225,7 @@ export class Tabs {
       this.activeTabId = id;
       this.tabs.forEach((tab) => tab.hide());
       this.getTab(id)?.show();
-      this.window.webContents.send("tabSwitched", id);
+      ee.emit("tabSwitched", id);
     }
   }
 
@@ -237,7 +238,7 @@ export class Tabs {
         const tabIds = this.getTabIds();
         this.setActiveTab(tabIds[tabIds.length - 1]);
       }
-      this.window.webContents.send("tabListChanged", this.getTabIds());
+      ee.emit("tabListChanged", this.getTabIds());
     }
   }
 
@@ -291,7 +292,7 @@ export class Tabs {
       this.store.set("favorites", newFavorites);
       tab.favorite = true;
 
-      this.window.webContents.send("tabDataChanged", tab.id, tab.getTabData());
+      ee.emit("tabDataChanged", tab.id, tab.getTabData());
     }
   }
 
@@ -305,7 +306,7 @@ export class Tabs {
       this.store.set("favorites", newFavorites);
       tab.favorite = false;
 
-      this.window.webContents.send("tabDataChanged", tab.id, tab.getTabData());
+      ee.emit("tabDataChanged", tab.id, tab.getTabData());
     }
   }
 

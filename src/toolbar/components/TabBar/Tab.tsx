@@ -5,6 +5,7 @@ import { Dismiss12Regular, DocumentRegular } from "@fluentui/react-icons";
 import type { TabData } from "../../../../electron/lib/tabs.ts";
 import { Icon } from "@iconify/react";
 import icon90RingWithBg from "@iconify/icons-svg-spinners/90-ring-with-bg";
+import { trpc } from "@/lib/trpc.tsx";
 
 interface TabProps extends HTMLAttributes<HTMLDivElement> {
   tabId: number;
@@ -18,17 +19,15 @@ const Tab = forwardRef<HTMLDivElement, TabProps>(
     const [tab, setTab] = useState<TabData | null>(null);
     const [noFavicon, setNoFavicon] = useState(true);
 
-    useEffect(() => {
-      tabs.getTab(tabId).then((tab) => setTab(tab));
-
-      const unlisten = tabs.onTabDataChanged((_, id, data) => {
+    trpc.tab.onTabDataChanged.useSubscription(undefined, {
+      onData({ id, data }) {
         if (id !== tabId) return;
         setTab(data);
-      });
+      },
+    });
 
-      return () => {
-        unlisten();
-      };
+    useEffect(() => {
+      tabs.getTab(tabId).then((tab) => setTab(tab));
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

@@ -1,5 +1,5 @@
-import { ipcMain, ipcRenderer, IpcRendererEvent } from "electron";
-import type { Tabs, TabData } from "./tabs.ts";
+import { ipcMain, ipcRenderer } from "electron";
+import type { Tabs } from "./tabs.ts";
 
 export function initTabsApi(tabs: Tabs) {
   ipcMain.handle("getTab", (_, id: number) => {
@@ -46,21 +46,4 @@ export const tabsApi = {
 
   addFavorite: (id: number) => ipcRenderer.invoke("addFavorite", id),
   removeFavorite: (id: number) => ipcRenderer.invoke("removeFavorite", id),
-
-  onTabListChanged: (
-    callback: (e: IpcRendererEvent, tabIds: number[]) => void,
-  ) => {
-    ipcRenderer.on("tabListChanged", callback);
-    return () => ipcRenderer.off("tabListChanged", callback);
-  },
-  onTabSwitched: (callback: (e: IpcRendererEvent, id: number) => void) => {
-    ipcRenderer.on("tabSwitched", callback);
-    return () => ipcRenderer.off("tabSwitched", callback);
-  },
-  onTabDataChanged: (
-    callback: (e: IpcRendererEvent, id: number, data: TabData) => void,
-  ) => {
-    ipcRenderer.on("tabDataChanged", callback);
-    return () => ipcRenderer.off("tabDataChanged", callback);
-  },
 };
