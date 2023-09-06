@@ -1,6 +1,5 @@
 import { app, BrowserWindow, Menu, nativeTheme } from "electron";
 import path from "node:path";
-import { initWindowApi } from "./lib/window.ts";
 import {
   VITE_DEV_SERVER_URL,
   titleBarHeight,
@@ -47,7 +46,6 @@ async function createWindow() {
     titleBarStyle: "hidden",
   });
   nativeTheme.themeSource = store.get("theme");
-  initWindowApi(win);
 
   // win.webContents.toggleDevTools();
 

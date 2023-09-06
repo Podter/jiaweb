@@ -3,14 +3,6 @@
 import type { IpcRendererEvent } from "electron";
 import type { TabData } from "../electron/lib/tabs.ts";
 
-export interface AppWindowApi {
-  isMaximized: () => Promise<boolean>;
-
-  onToggleMaximize: (
-    callback: (e: IpcRendererEvent, isMaximized: boolean) => void,
-  ) => () => void;
-}
-
 export interface TabsApi {
   getTab: (id: number) => Promise<TabData>;
   getActiveTabId: () => Promise<number>;
@@ -42,7 +34,6 @@ export interface TabsApi {
 
 declare global {
   interface Window {
-    appWindow: AppWindowApi;
     tabs: TabsApi;
   }
 }

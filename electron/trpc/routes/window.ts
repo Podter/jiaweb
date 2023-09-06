@@ -1,5 +1,5 @@
 import { router, publicProcedure } from "../trpc.ts";
-import { z } from "zod";
+import { observable } from "@trpc/server/observable";
 
 export const windowRouter = router({
   close: publicProcedure.mutation(({ ctx }) => {
@@ -15,7 +15,18 @@ export const windowRouter = router({
       ctx.win.maximize();
     }
   }),
-  isMaximized: publicProcedure.output(z.boolean()).query(({ ctx }) => {
-    return ctx.win.isMaximized();
+  onToggleMaximize: publicProcedure.subscription(({ ctx }) => {
+    return observable<boolean>((emit) => {
+      const onMaximize = () => emit.next(true);
+      const onUnmaximize = () => emit.next(false);
+
+      ctx.win.on("maximize", onMaximize);
+      ctx.win.on("unmaximize", onUnmaximize);
+
+      return () => {
+        ctx.win.off("maximize", onMaximize);
+        ctx.win.off("unmaximize", onUnmaximize);
+      };
+    });
   }),
 });

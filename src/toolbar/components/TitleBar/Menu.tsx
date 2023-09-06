@@ -7,10 +7,8 @@ import {
   Subtract16Regular,
   MoreHorizontal16Regular,
 } from "@fluentui/react-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { trpc } from "@/lib/trpc.tsx";
-
-const { appWindow } = window;
 
 export default function Menu() {
   const [maximized, setMaximized] = useState(false);
@@ -22,17 +20,11 @@ export default function Menu() {
   const { mutate: toggleMaximize } = trpc.window.toggleMaximize.useMutation();
   const { mutate: minimize } = trpc.window.minimize.useMutation();
 
-  useEffect(() => {
-    appWindow.isMaximized().then((maximized) => setMaximized(maximized));
-
-    const unlisten = appWindow.onToggleMaximize((_, maximized) =>
-      setMaximized(maximized),
-    );
-
-    return () => {
-      unlisten();
-    };
-  }, []);
+  trpc.window.onToggleMaximize.useSubscription(undefined, {
+    onData(maximized) {
+      setMaximized(maximized);
+    },
+  });
 
   return (
     <div className="flex justify-end items-center z-50">
