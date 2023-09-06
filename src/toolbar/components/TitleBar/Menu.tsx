@@ -7,8 +7,8 @@ import {
   Subtract16Regular,
   MoreHorizontal16Regular,
 } from "@fluentui/react-icons";
-import { useState } from "react";
-import { trpc } from "@/lib/trpc.tsx";
+import { useEffect, useState } from "react";
+import { trpc, trpcClient } from "@/lib/trpc.tsx";
 
 export default function Menu() {
   const [maximized, setMaximized] = useState(false);
@@ -25,6 +25,10 @@ export default function Menu() {
       setMaximized(maximized);
     },
   });
+
+  useEffect(() => {
+    trpcClient.window.isMaximized.query().then(setMaximized);
+  }, []);
 
   return (
     <div className="flex justify-end items-center z-50">
