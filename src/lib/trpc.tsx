@@ -6,12 +6,13 @@ import type { AppRouter } from "../../electron/trpc/root.ts";
 
 export const trpc = createTRPCReact<AppRouter>();
 
-export const trpcClient = trpc.createClient({
-  links: [ipcLink()],
-});
-
 export function TRPCProvider({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => new QueryClient());
+  const [trpcClient] = useState(() =>
+    trpc.createClient({
+      links: [ipcLink()],
+    }),
+  );
 
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
