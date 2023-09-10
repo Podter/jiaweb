@@ -7,8 +7,6 @@ import {
 import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
 import { trpcClient } from "@/lib/trpc.tsx";
 
-const { tabs } = window;
-
 export default function Controls() {
   const activeTabId = useActiveTab();
 
@@ -32,7 +30,7 @@ export default function Controls() {
       >
         <ArrowRight16Regular />
       </TitleBarButton>
-      <TitleBarButton onClick={() => tabs.createTab()}>
+      <TitleBarButton onClick={() => trpcClient.tab.createTab.mutate()}>
         <Add16Regular />
       </TitleBarButton>
     </div>

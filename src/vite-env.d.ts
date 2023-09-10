@@ -6,10 +6,6 @@ export interface TabsApi {
   getTab: (id: number) => Promise<TabData>;
   getActiveTabId: () => Promise<number>;
   getTabIds: () => Promise<number[]>;
-
-  createTab: (initialUrl?: string) => Promise<number>;
-  setActiveTab: (id: number) => Promise<void>;
-  closeTab: (id: number) => Promise<void>;
 }
 
 declare global {

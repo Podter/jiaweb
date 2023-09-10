@@ -5,7 +5,7 @@ import { Dismiss12Regular, DocumentRegular } from "@fluentui/react-icons";
 import type { TabData } from "../../../../electron/lib/tabs.ts";
 import { Icon } from "@iconify/react";
 import icon90RingWithBg from "@iconify/icons-svg-spinners/90-ring-with-bg";
-import { trpc } from "@/lib/trpc.tsx";
+import { trpc, trpcClient } from "@/lib/trpc.tsx";
 
 interface TabProps extends HTMLAttributes<HTMLDivElement> {
   tabId: number;
@@ -51,7 +51,7 @@ const Tab = forwardRef<HTMLDivElement, TabProps>(
       >
         <button
           className="flex justify-center items-center h-full w-full"
-          onClick={() => tabs.setActiveTab(tab.id)}
+          onClick={() => trpcClient.tab.setActiveTab.mutate(tab.id)}
         >
           {tab.isLoading ? (
             <Icon icon={icon90RingWithBg} fontSize={12} className="mr-2" />
@@ -71,7 +71,7 @@ const Tab = forwardRef<HTMLDivElement, TabProps>(
           variant="ghost"
           size="sm"
           className="h-6 w-6 p-0 hover:bg-muted-foreground/20 absolute right-2 hidden group-hover:inline-flex"
-          onClick={() => tabs.closeTab(tab.id)}
+          onClick={() => trpcClient.tab.closeTab.mutate(tab.id)}
         >
           <Dismiss12Regular />
         </Button>
