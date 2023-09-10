@@ -4,15 +4,13 @@ import { Button } from "@/components/ui/button.tsx";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { trpc } from "@/lib/trpc.tsx";
+import { trpcClient } from "@/lib/trpc.tsx";
 
 const formSchema = z.object({
   query: z.string().min(1),
 });
 
 export default function SearchInput() {
-  const { mutate: search } = trpc.newTab.search.useMutation();
-
   const { handleSubmit, register } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -24,7 +22,7 @@ export default function SearchInput() {
     <form
       className="flex justify-center items-center relative w-[40vw]"
       onSubmit={handleSubmit(async ({ query }) =>
-        search(encodeURIComponent(query)),
+        trpcClient.newTab.search.mutate(encodeURIComponent(query)),
       )}
     >
       <Input
