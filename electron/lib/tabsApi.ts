@@ -23,9 +23,6 @@ export function initTabsApi(tabs: Tabs) {
   ipcMain.handle("setUrl", (_, id: number, url: string) =>
     tabs.setUrl(id, url),
   );
-
-  ipcMain.handle("addFavorite", (_, id: number) => tabs.addFavorite(id));
-  ipcMain.handle("removeFavorite", (_, id: number) => tabs.removeFavorite(id));
 }
 
 export const tabsApi = {
@@ -43,7 +40,4 @@ export const tabsApi = {
   reload: (id: number) => ipcRenderer.invoke("reload", id),
   stop: (id: number) => ipcRenderer.invoke("stop", id),
   setUrl: (id: number, url: string) => ipcRenderer.invoke("setUrl", id, url),
-
-  addFavorite: (id: number) => ipcRenderer.invoke("addFavorite", id),
-  removeFavorite: (id: number) => ipcRenderer.invoke("removeFavorite", id),
 };

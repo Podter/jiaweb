@@ -12,6 +12,7 @@ import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import icon90RingWithBg from "@iconify/icons-svg-spinners/90-ring-with-bg";
+import { trpcClient } from "@/lib/trpc.tsx";
 
 const { tabs } = window;
 
@@ -67,12 +68,12 @@ export default function HostnameDisplay({ onClick, overrideHostname }: Props) {
           variant="ghost"
           size="sm"
           className="h-6 w-6 p-0 z-50"
-          onClick={() => {
+          onClick={async () => {
             if (!activeTab) return;
             if (activeTab.favorite) {
-              tabs.removeFavorite(activeTab.id);
+              await trpcClient.tab.removeFavorite.mutate(activeTab.id);
             } else {
-              tabs.addFavorite(activeTab.id);
+              await trpcClient.tab.addFavorite.mutate(activeTab.id);
             }
           }}
         >

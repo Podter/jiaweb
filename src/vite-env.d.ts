@@ -16,9 +16,6 @@ export interface TabsApi {
   reload: (id: number) => Promise<void>;
   stop: (id: number) => Promise<void>;
   setUrl: (id: number, url: string) => Promise<void>;
-
-  addFavorite: (id: number) => Promise<void>;
-  removeFavorite: (id: number) => Promise<void>;
 }
 
 declare global {
