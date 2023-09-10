@@ -15,7 +15,7 @@ export default function TabBar() {
   });
 
   useEffect(() => {
-    trpcClient.tab.getTabIds.query().then((tabs) => setTabs(tabs));
+    trpcClient.tab.getTabIds.query().then(setTabs);
   }, []);
 
   return (
@@ -25,9 +25,10 @@ export default function TabBar() {
         tabs.length <= 1 && "hidden",
       )}
     >
-      {tabs.map((tab) => (
-        <Tab key={tab} tabId={tab} selected={activeTab?.id === tab} />
-      ))}
+      {Array.isArray(tabs) &&
+        tabs.map((tab) => (
+          <Tab key={tab} tabId={tab} selected={activeTab?.id === tab} />
+        ))}
     </div>
   );
 }
