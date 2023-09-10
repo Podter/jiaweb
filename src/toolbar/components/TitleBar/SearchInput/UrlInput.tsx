@@ -7,8 +7,7 @@ import { useForm } from "react-hook-form";
 import { type Dispatch, type SetStateAction, useEffect, useRef } from "react";
 import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
 import createUrl from "@/toolbar/lib/createUrl.ts";
-
-const { tabs } = window;
+import { trpcClient } from "@/lib/trpc.tsx";
 
 const formSchema = z.object({
   url: z.string().min(1),
@@ -51,10 +50,10 @@ export default function UrlInput({ cancel, setOverrideHostname }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function onSubmit({ url }: z.infer<typeof formSchema>) {
+  async function onSubmit({ url }: z.infer<typeof formSchema>) {
     if (activeTab) {
       const newUrl = createUrl(url);
-      tabs.setUrl(activeTab.id, newUrl);
+      await trpcClient.tab.setUrl.mutate({ id: activeTab.id, url: newUrl });
 
       const urlObj = new URL(newUrl);
       setOverrideHostname(urlObj.hostname);

@@ -5,6 +5,7 @@ import {
   Add16Regular,
 } from "@fluentui/react-icons";
 import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
+import { trpcClient } from "@/lib/trpc.tsx";
 
 const { tabs } = window;
 
@@ -14,18 +15,18 @@ export default function Controls() {
   return (
     <div className="flex items-center z-50 ml-1">
       <TitleBarButton
-        onClick={() => {
+        onClick={async () => {
           if (!activeTabId) return;
-          tabs.back(activeTabId.id);
+          await trpcClient.tab.back.mutate(activeTabId.id);
         }}
         disabled={!activeTabId || !activeTabId.canGoBack}
       >
         <ArrowLeft16Regular />
       </TitleBarButton>
       <TitleBarButton
-        onClick={() => {
+        onClick={async () => {
           if (!activeTabId) return;
-          tabs.forward(activeTabId.id);
+          await trpcClient.tab.forward.mutate(activeTabId.id);
         }}
         disabled={!activeTabId || !activeTabId.canGoForward}
       >

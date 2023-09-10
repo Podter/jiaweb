@@ -14,8 +14,6 @@ import { Icon } from "@iconify/react";
 import icon90RingWithBg from "@iconify/icons-svg-spinners/90-ring-with-bg";
 import { trpcClient } from "@/lib/trpc.tsx";
 
-const { tabs } = window;
-
 type Props = {
   onClick?: () => void;
   overrideHostname?: string;
@@ -83,12 +81,12 @@ export default function HostnameDisplay({ onClick, overrideHostname }: Props) {
           variant="ghost"
           size="sm"
           className="h-6 w-6 p-0 z-50"
-          onClick={() => {
+          onClick={async () => {
             if (!activeTab) return;
             if (activeTab.isLoading) {
-              tabs.stop(activeTab.id);
+              await trpcClient.tab.stop.mutate(activeTab.id);
             } else {
-              tabs.reload(activeTab.id);
+              await trpcClient.tab.reload.mutate(activeTab.id);
             }
           }}
         >
