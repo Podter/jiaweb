@@ -6,22 +6,20 @@ import {
   useEffect,
 } from "react";
 import type { TabData } from "../../../electron/lib/tabs.ts";
-import { trpc } from "@/lib/trpc.tsx";
+import { trpc, trpcClient } from "@/lib/trpc.tsx";
 
-const { tabs } = window;
-
-const ActiveTabContext = createContext<TabData | null>(null);
+const ActiveTabContext = createContext<TabData | undefined>(undefined);
 
 export const useActiveTab = () => useContext(ActiveTabContext);
 
 export function ActiveTabProvider({ children }: PropsWithChildren) {
   const [tabId, setTabId] = useState(-1);
-  const [tab, setTab] = useState<TabData | null>(null);
+  const [tab, setTab] = useState<TabData | undefined>(undefined);
 
   trpc.tab.onTabSwitched.useSubscription(undefined, {
     onData(id) {
       setTabId(id);
-      tabs.getTab(id).then(setTab);
+      trpcClient.tab.getTab.query(id).then(setTab);
     },
   });
 
@@ -33,9 +31,9 @@ export function ActiveTabProvider({ children }: PropsWithChildren) {
   });
 
   useEffect(() => {
-    tabs.getActiveTabId().then((id) => {
+    trpcClient.tab.getActiveTabId.query().then((id) => {
       setTabId(id);
-      tabs.getTab(id).then(setTab);
+      trpcClient.tab.getTab.query(id).then(setTab);
     });
   }, []);
 

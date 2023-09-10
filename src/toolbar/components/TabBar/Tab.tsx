@@ -12,11 +12,9 @@ interface TabProps extends HTMLAttributes<HTMLDivElement> {
   selected?: boolean;
 }
 
-const { tabs } = window;
-
 const Tab = forwardRef<HTMLDivElement, TabProps>(
   ({ tabId, selected, className, ...props }, ref) => {
-    const [tab, setTab] = useState<TabData | null>(null);
+    const [tab, setTab] = useState<TabData | undefined>(undefined);
     const [noFavicon, setNoFavicon] = useState(true);
 
     trpc.tab.onTabDataChanged.useSubscription(undefined, {
@@ -27,7 +25,7 @@ const Tab = forwardRef<HTMLDivElement, TabProps>(
     });
 
     useEffect(() => {
-      tabs.getTab(tabId).then((tab) => setTab(tab));
+      trpcClient.tab.getTab.query(tabId).then((tab) => setTab(tab));
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

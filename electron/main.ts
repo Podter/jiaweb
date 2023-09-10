@@ -6,7 +6,6 @@ import {
   tabBarHeight,
 } from "./constants.ts";
 import { Tabs, type Favorite } from "./lib/tabs.ts";
-import { initTabsApi } from "./lib/tabsApi.ts";
 import Store from "electron-store";
 import { createIPCHandler } from "electron-trpc/main";
 import { createTRPCContext } from "./trpc/trpc.ts";
@@ -51,7 +50,6 @@ async function createWindow() {
 
   tabs = new Tabs(win, store);
   tabs.createTab();
-  initTabsApi(tabs);
 
   createIPCHandler({
     router: appRouter,

@@ -2,9 +2,7 @@ import Tab from "./Tab.tsx";
 import { cn } from "@/lib/utils.ts";
 import { useActiveTab } from "@/toolbar/contexts/ActiveTabContext.tsx";
 import { useEffect, useState } from "react";
-import { trpc } from "@/lib/trpc.tsx";
-
-const { tabs: tabsApi } = window;
+import { trpc, trpcClient } from "@/lib/trpc.tsx";
 
 export default function TabBar() {
   const [tabs, setTabs] = useState<number[]>([]);
@@ -17,7 +15,7 @@ export default function TabBar() {
   });
 
   useEffect(() => {
-    tabsApi.getTabIds().then((tabs) => setTabs(tabs));
+    trpcClient.tab.getTabIds.query().then((tabs) => setTabs(tabs));
   }, []);
 
   return (
