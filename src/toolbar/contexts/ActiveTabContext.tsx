@@ -18,8 +18,12 @@ export function ActiveTabProvider({ children }: PropsWithChildren) {
 
   trpc.tab.onTabSwitched.useSubscription(undefined, {
     onData(id) {
-      setTabId(id);
-      trpcClient.tab.getTab.query(id).then(setTab);
+      // idk why id returns tab object sometimes
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const newTabId = id.id ?? id;
+      setTabId(newTabId);
+      trpcClient.tab.getTab.query(newTabId).then(setTab);
     },
   });
 
